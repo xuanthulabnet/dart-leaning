@@ -1,0 +1,182 @@
+<?
+/**
+ * @var $this PhpRenderer
+ */
+$index_article =\XT\Core\Common\Common::sendevent('dynamic_load_phtml',
+    ['file'=>'module/Application/view/dynamiccontent/dart.php', 'view'=>$this])->last();
+
+$nav = $index_article->renderlist();
+
+\XT\Core\Common\Common::eventValue(\XT\Core\System\KeyView::startNav(),$nav);
+
+$index_article = [
+    ['Dart' , '<strong>Cài đặt Dart SDK</strong>'],
+    ['DartSDKC' , '<strong>Những thành phần trong SDK Dart</strong>'],
+    ['ScriptDart' , '<strong>Chạy một script Dart</strong>'],
+    ['IDE' , '<strong>Viết Dart trên VS CODE</strong>'],
+    ['MAIN' , '<strong>Nhận xét chương trình Hello</strong>'],
+];
+
+?>
+    <a id="<?=$index_article[0][0]?>" name="<?=$index_article[0][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Cài đặt Dart SDK</h2>
+    <p><code>Dart SDK</code> nó cung cấp những công cụ cần thiết để phát triển ứng dụng viết bằng Dart. Tùy thuộc sử dụng
+        môi trường nào (Windows, Linux, Mac) thì cài đặt Dart SDK tương ứng cho môi trường đó.</p>
+
+    <h2 class="text-primary display-4 font20">Cài đặt Dart SDK trên Windows</h2>
+    <p>Tải bộ cài <a href="http://www.gekorm.com/dart-windows/" target="_blank">Dart SDK</a> về và chạy để cài đặt, sau khi cài đặt các công cụ chứa tại:
+        <br>
+        <code>C:\Program Files\Dart\dart-sdk\bin</code> </p>
+    <h2 class="text-primary display-4 font20">Cài đặt Dart SDK trên Linux (Ubuntu)</h2>
+    <pre class="bg-dark text-light p-2">
+<span class="text-secondary">$</span> sudo apt-get update
+<span class="text-secondary">$</span> sudo apt-get install apt-transport-https
+<span class="text-secondary">$</span> sudo sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
+<span class="text-secondary">$</span> sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list'
+<span class="text-secondary">$</span> sudo apt-get update
+<span class="text-secondary">$</span> sudo apt-get install dart
+<span class="text-secondary">$</span> sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_unstable.list > /etc/apt/sources.list.d/dart_unstable.list'
+<span class="text-secondary">$</span> sudo apt-get update
+<span class="text-secondary">$</span> sudo apt-get install dart
+
+<span class="text-secondary">#Thiết lập biến môi trường để gọi Dart bất kỳ đâu</span>
+<span class="text-secondary">$</span> export PATH="$PATH:/usr/lib/dart/bin"
+<span class="text-secondary">$</span> echo 'export PATH="$PATH:/usr/lib/dart/bin"' >> ~/.profile
+</pre>
+    <h2 class="text-primary display-4 font20">Kiểm tra Dart SDK sau khi cài đặt</h2>
+    <p>Từ dòng lệnh <code>terminate</code> (dùng PowerShell trên Windows) gõ</p>
+    <pre class="bg-dark text-light p-2">
+<span class="text-secondary">$</span> dart --version
+<span class="text-secondary">Dart VM version: 2.1.0 (Tue Nov 13 18:22:02 2018 +0100) on "windows_x64"</span>
+</pre>
+    <p>Dòng thông tin xuất hiện, cho biết việc cài SDK (Software Develope Kit) Dart thành công</p>
+    <a id="<?=$index_article[1][0]?>" name="<?=$index_article[1][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Các thành phần Dart SDK</h2>
+    <p>Những thành phần cốt lõi này bạn chạy nó từ dòng lệnh gồm:</p>
+    <ul>
+        <li><code>dart</code> máy ảo VM chạy mã Dart</li>
+        <li><code>dart2js</code> biên dịch Dart thành JavaScript</li>
+        <li><code>dartanalyzer</code> phân tích mã viết bằng Dart</li>
+        <li><code>dartdevc</code> công cụ biên dịch cho ứng dụng web</li>
+        <li><code>dartdoc</code> phát sinh tài liệu API</li>
+        <li><code>dartfmt</code> định dạng mã Dart (cho đẹp, cho đúng chuẩn, cho dễ đọc)</li>
+        <li><code>pub</code> quản lý gói trong Dart (giống npm của NodeJS)</li>
+    </ul>
+    <a id="<?=$index_article[2][0]?>" name="<?=$index_article[2][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Chạy một Script viết bằng Dart</h2>
+    <p>Bạn có thể dùng bất kỳ trình soạn thảo text nào để viết code Dart, giờ bạn tạo ra một file đặt tên là
+        <code>hello.dart</code> có nội dung như sau:</p>
+    <pre class="prettyprint lang-js">
+main() {
+    print('Hello World!');
+}
+</pre>
+    <p>Đoạn mã trên viết ra màn hình dòng chữ: Hello World!. Giờ bạn chạy thử bằng cách gõ lệnh từ <code>terminate </code> (Bash, PS) như sau:</p>
+    <pre class="prettyprint lang-js">
+<span class="text-secondary">#</span> dart hello.dart
+Hello World!
+</pre>
+
+    <a id="<?=$index_article[3][0]?>" name="<?=$index_article[3][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Sử dụng VS Code để viết code Dart</h2>
+    <p>Có nhiều IDE phức tạp mà nó hỗ trợ Dart thông qua các plugin như: <code>Android Studio</code>,
+        <code>IntelliJ IDEA</code>, <code>Visual Studio Code</code> ... Tùy mục đích phát triển ứng dụng mà chọn IDE tương ứng.</p>
+    <p>Đáp ửng đủ nhu cầu thực hành code viết bằng Dart, thì <strong>Visual Studio Code</strong> là một lựa chọn tuyệt vời. Ở phần cơ bản về Dart ta sẽ dùng IDE này (nó miễn phí, mã nguồn mở, rất nhiều plugin cho hầu hết các ngôn ngữ lập trình ...) </p>
+    <p class="display-4 font35">(1) Cài đặt</p>
+    <p>Nếu chưa có <strong>Visual Studio Code</strong> thì tải về và cài đặt tại:
+        <a href="https://code.visualstudio.com/download" target="_blank">VS Code Download</a>
+    </p>
+    <img src="https://code.visualstudio.com/assets/home/home-screenshot-win-lg.png" alt="VS CODE">
+    <p>Để <strong>VS Code</strong> hỗ trợ kiểm tra cú pháp code, định dạng code, debug ... thì cần cài đặt Plugin do Google cung cấp là <strong>Dart code</strong>. Chọn mục plugin (đánh dấu màu đỏ) gõ Dart, chọn nó, rồi bấm và <code>install</code></p>
+    <img src="https://raw.githubusercontent.com/xuanthulabnet/dart-leaning/media/vcode-dart-plugin.png" alt="dart">
+    <p class="display-4 font35">(2) Sử dụng VS Code</p>
+    <p>Khi đã có plugin Dart, thì các file code có phần mở rộng <code>.dart</code> được VS tự động nhận biết, nó sẽ hightlight code cho dễ đọc, gợi ý, kiểm tra cú pháp.</p>
+    <p>Tạo một thư mục dự án đặt tên là <code>firstproject</code>, chạy VS rồi nhấn <code>ctrl+k ctrl+o</code> mở thư mục đó ra.</p>
+
+    <p>Tại thư mục <code>firstproject</code> bấm vào chọn <code>New File</code>, tạo file mới ở đó với tên <code>hello.dart</code>, rồi nhập code sau vào:</p>
+
+    <pre class="prettyprint lang-js">
+/**
+ * Đây là chương trình Dart đầu tiên
+ */
+
+main() {
+  //in ra dòng chữ
+  print("Hello World!");
+}
+</pre>
+    <img src="https://raw.githubusercontent.com/xuanthulabnet/dart-leaning/media/dart1.png" alt="VSC">
+
+
+    <p>Chạy thử <code>hello.dart</code>: gõ <code>Ctrl+`</code> để mở <code>TERMINATE (PS)</code>,
+        rồi từ đó gõ <code>dart hello.dart</code>, chương trình sẽ chạy và kết quả như hình</p>
+    <img src="https://raw.githubusercontent.com/xuanthulabnet/dart-leaning/media/dart2.PNG" alt="Run dart">
+
+    <p>Giờ thay đổi code trên một chút</p>
+    <pre class="prettyprint lang-js">
+/**
+ * Đây là chương trình Dart đầu tiên
+ */
+
+main() {
+  var i = 120;  //khai báo biến
+  var k = i/7;
+
+  print("Hello ${i + k}");
+}
+</pre>
+    <p>Chạy lại sẽ in ra dòng thông báo: <code>Hello 137.14285714285714</code></p>
+
+
+    <p>Giờ ta sẽ cầu hình để chạy và Debug code. Bấm chọn biểu tượng <code>Debug</code>, sau đó chọn
+        <code>Add configuration ...</code> như hình dưới, nó sẽ tạo ra file <code>launch.json</code></p>
+    <img src="https://raw.githubusercontent.com/xuanthulabnet/dart-leaning/media/dart3.png" alt="">
+    <p>Mở file <code>launch.json</code> ra, sửa lại như sau (dòng in đậm) rồi đóng tab lại:</p>
+
+    <pre class="prettyprint lang-js">
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Dart",
+            "program": <strong>"hello.dart"</strong>,
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}
+</pre>
+
+    <p>Giờ thì có chạy và Debug <code>hello.dart</code>, để bắt đầu chạy và debug bấm vào <code>Start debugging</code> (1), khi code đang chạy sẽ có công cụ debug (2) với các chức năng rất quen thuộc
+        như <code>continue</code>, <code>Step into</code>, <code>restart</code> ...</p>
+    <p>Các biến, các hàm ... được gọi xuất hiện thông tin ở bên trái (3), để lọc nhập tên vào khu vực (4). Kết thúc dubug nhấn Stop</p>
+    <img src="https://raw.githubusercontent.com/xuanthulabnet/dart-leaning/media/dart4.PNG" alt="">
+    <a id="<?=$index_article[4][0]?>" name="<?=$index_article[4][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Chương trình Hello</h2>
+    <p>Từ chương trình đơn giản trên ta thấy:</p>
+    <ul>
+        <li>Ứng dụng Dart bắt đầu chạy từ một hàm tên là <code>main</code></li>
+        <li>Hàm <code>print(s)</code> để in ra một dòng chữ, dòng chữ viết trực tiếp trong dấu
+            nháy đơn <code>''</code> hoặc kép <code>""</code></li>
+        <li>Comment chú thích code
+            <pre class="prettyprint lang-js">
+/**
+    Coment viết
+    được trên nhiều dòng
+*/
+
+//Comment này chỉ viết trên 1 dòng
+</pre>
+
+        </li>
+
+    </ul>
+
+    <p class="font20 alert alert-danger">Như vậy đến đây ta đã có đủ công cụ, cài đặt và vận hành Visual Studio Code, chạy và debug ứng dụng dart, đây là cơ sở để thực hành các kiến thức cơ bản về ngôn ngữ Dart</p>
+
+<?
+echo\XT\Core\Common\Common::createBottomIndex($index_article);
+?>
