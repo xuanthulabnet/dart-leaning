@@ -1,0 +1,227 @@
+<?
+/**
+ * @var $this PhpRenderer
+ */
+$index_article =\XT\Core\Common\Common::sendevent('dynamic_load_phtml',
+    ['file'=>'module/Application/view/dynamiccontent/dart.php', 'view'=>$this])->last();
+
+$nav = $index_article->renderlist();
+
+\XT\Core\Common\Common::eventValue(\XT\Core\System\KeyView::startNav(),$nav);
+
+$index_article = [
+    ['DartSimple' , '<strong>Chương trình Dart đơn giản</strong>'],
+    ['main' , '<strong>Hàm main</strong>'],
+    ['codeblock' , '<strong>Câu lệnh / Khối lệnh {}</strong>'],
+    ['comment' , '<strong>Chú thích trong code</strong>'],
+    ['var' , '<strong>Khai báo biến với var</strong>'],
+    ['string' , '<strong>Viết chuỗi cụ thể</strong>'],
+    ['import' , '<strong>Nạp thư viện</strong>'],
+    ['basicon' , '<strong>Những khái niệm cơ bản</strong>'],
+    ['quytac' , '<strong>Quy tắc trình bày code</strong>'],
+
+
+];
+
+?>
+    <a id="<?=$index_article[0][0]?>" name="<?=$index_article[0][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Chương trình Dart đơn giản</h2>
+<p>Đây là một chương trình Dart đơn giản, lưu nó thành file <code>basic.dart</code>, đặt nó trong một thư mục dự án mới
+là theo hướng dẫn ở phần <a href="/cai-dat-sdk-dart-viet-chuong-trinh-dart-dau-tien.html" target="_blank">Cài đặt SDK Dart</a> để tạo <code>launch.json</code> trong VS Code, rồi nhấn <code>Ctrl + F5</code> chạy thử</p>
+<pre class="prettyprint lang-js">
+import 'dart:math'; //Nạp thư viện
+
+///Hàm tính tổng sumint
+///
+///Tính tổng 2 số nguyên
+///trả về tổng 2 số nguyên ...
+sumInt(int a, int b) {
+  return a + b;
+}
+
+/**
+ * Hàm main là điểm mồi ứng dụng bắt đầu chạy từ
+ * hàm này
+ */
+main(List&lt;String&gt; args) {
+  var tong;               //Khai báo một biến
+  var a = 10;             //Khai báo và khởi tạo biến luôn
+
+  tong = sumInt(a, 20);   //Gọi hàm sumInt
+  print('Tổng là: $tong');
+
+  var sqrtvalue = sqrt(tong);
+  print('Căn bậc 2 của $tong là $sqrtvalue');
+
+}
+</pre>
+<p>Kết quả chạy chương trình</p>
+<img src="https://raw.githubusercontent.com/xuanthulabnet/dart-leaning/2_basicsyntax/doc/exec-basic.png" alt="ket qua">
+<p>Từ đoạn mã trên, lưu ý một số vấn đề cơ bản nhất sau đây.</p>
+    <a id="<?=$index_article[1][0]?>" name="<?=$index_article[1][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Hàm main</h2>
+<p>Một ứng dụng <code>Dart</code> bắt đầu chạy từ hàm <code>main</code>, hàm này bắt buộc phải có,
+    nó có thể có tham số như khai báo ở trên. Nếu ứng dụng không nhận tham số ở main thì có thể chỉ cần khai báo</p>
+<pre class="prettyprint lang-js">
+main() {
+    // ...
+}
+</pre>
+<p class="alert alert-danger">Dart có phân biệt chữ hoa/thường nên khi đặt tên cho các thành phần hàm, biến ... cần
+lưu ý. Hàm <code>main()</code> và hàm <code>maIn()</code> là khác nhau.</p>
+    <a id="<?=$index_article[2][0]?>" name="<?=$index_article[2][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Câu lệnh, Khối lệnh</h2>
+<p>Các lệnh trong <code>Dart</code> được viết mà các thành phần không bị ảnh hưởng bởi khoảng trắng,
+    kết thúc một câu lệnh là dấu <code>;</code></p>
+<pre class="prettyprint lang-js">
+//Câu lệnh
+return a + b;
+
+//Viết lại như sau là tương đương
+return
+        a
+            +
+    b;
+</pre>
+
+
+<p>Một nhóm các lệnh nhóm lại với nhau được gọi là một khối lệnh, trong <code>Dart</code> nó sử dụng
+cặp dấu <code>{}</code> để tạo khối. Khối lệnh có thể lồng nhau.</p>
+<pre class="prettyprint lang-js">
+if (a > 1) {
+    //Khối lệnh 1
+}
+else {
+    //Khối lệnh 2
+}
+</pre>
+
+    <a id="<?=$index_article[2][0]?>" name="<?=$index_article[2][0]?>"></a>
+    <h2 class="text-danger display-4 font30">COMMENT - Chú thích code</h2>
+<p>Các chú thích đưa vào trong code thì không ảnh hưởng gì đến code, mục đích nó là mô tả để đọc lại dễ hiểu, có 2 loại chú thích</p>
+<p><strong>Chú thích 1 dòng</strong> các chữ phía sau ký hiệu <code>//</code> không ảnh hưởng gì tới code</p>
+<pre class="prettyprint lang-js">
+// Đây là chú thích trên 1 dòng
+</pre>
+<p><strong>Chú thích nhiều dòng dòng</strong> các dòng chữ nằm giữa ký hiệu <code>/*</code> và <code>*/</code>
+không ảnh hưởng gì tới code</p>
+<pre class="prettyprint lang-js">
+/*
+    Đây
+    là chú thích
+    nhiều dòng
+*/
+</pre>
+<p><strong>Chú thích Documentation</strong> là dòng chữ phía sau ký hiệu <code>///</code>, nó tương tự như chú thích 1 dòng, nhưng nội dung viết trong nó viết theo một quy tắc nhất định để tham khảo tới hàm, biến, lớp ... (tìm hiểu sau),
+nó giống PHPDoc trong PHP. Mục đích là để sinh ra tài liệu. Ví dụ nó phát sinh ra tài liệu tham khảo, để người khác đọc tài liệu này biết sử dụng lại logic của code.</p>
+    <a id="<?=$index_article[3][0]?>" name="<?=$index_article[3][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Khai báo biến với var</h2>
+<p>Các biến để lưu giữ các đối tượng, với <code>Dart</code> nó cho phép khai báo biến mà không cần chỉ rõ
+biến đó thuộc kiểu dữ liệu gì bằng từ khóa <code>var</code>, sau này kiểu dữ liệu của biến phụ thuộc vào
+đối tượng gán vào biến.</p>
+<pre class="prettyprint lang-js">
+var tenbien;
+</pre>
+<a id="<?=$index_article[4][0]?>" name="<?=$index_article[4][0]?>"></a>
+<h2 class="text-danger display-4 font30">Chuỗi cụ thể</h2>
+<p>Một chuỗi là tập hợp các ký tự, ở ví dụ trên lệnh <code>print()</code> nhận tham số là một chuỗi
+cụ thể và in nó ra. Để tạo ra chuỗi này trong code thì bạn viết chuỗi chữ đó ra trong cặp dấu nháy đơn
+<code>''</code> hoặc kép <code>""</code></p>
+<pre class="prettyprint lang-js">
+print('Đây là một chuỗi');
+print("Đây cũng là một chuỗi");
+</pre>
+<p>Bạn có thể đưa một giá trị trong biến vào chuỗi bằng ký hiệu <code>$tên_biến</code>, hoặc chèn cả biểu thức
+vào chuỗi cụ thể <code>${biểu_thức}</code></p>
+
+<pre class="prettyprint lang-js">
+var a = 4;
+var y = 6;
+
+print("Giá trị a là $a");  // => 'Giá trị a là 4'
+print("Tổng là ${a + b}"); // => "Tổng là 10"
+</pre>
+<a id="<?=$index_article[5][0]?>" name="<?=$index_article[5][0]?>"></a>
+<h2 class="text-danger display-4 font30">Nạp thư viên</h2>
+<p><code>Dart</code> cũng tổ chức code thành các thư viện, có những thư viện xây dựng sẵn như
+thư viện toán <code>dart:math</code> ... , cần dùng thư viện nào thì nạp nó vào bằng lệnh <code>import</code>.
+Bạn cũng sẽ tự xây dựng các thư viện cho mình và nạp vào bằng cách này, kể cả nạp một file <code>.dart</code>
+cũng dùng import.</p>
+<pre class="prettyprint lang-js">
+import 'dart:math'; //Nạp thư viện toán
+
+//Do có nạp math, mà giờ đây có hàm tính căn bậc 2 sqrt
+print(sqrt(9));
+</pre>
+<p>Trở lại dự án trên của bạn, giờ bạn tạo ra một file khác đặt tên là <code>banner.dart</code></p>
+<p>Nội dung file có định nghĩa hàm <code>banner()</code></p>
+<pre class="prettyprint lang-js">
+void banner() {
+  print("========================================================");
+}
+</pre>
+<p>Sau đó trở lại <code>basic.dart</code>, nạp file này vào bằng lệnh <code>import 'banner.dart';</code>,
+vậy là trong <code>basic.dart</code> gọi được hàm <code>banner();</code></p>
+<pre class="prettyprint lang-js">
+import 'dart:math';
+import 'banner.dart';
+
+///Hàm tính tổng sumint
+///
+///Tính tổng 2 số nguyên
+///trả về tổng 2 số nguyên ...
+
+sumInt(int a, int b) {
+  return a + b;
+}
+
+/**
+ * Hàm main là điểm mồi ứng dụng bắt đầu chạy từ
+ * hàm này
+ */
+main() {
+  banner();
+  var tong;               //Khai báo một biến
+  var a = 10;             //Khai báo và khởi tạo biến luôn
+
+  tong = sumInt(a, 20);   //Gọi hàm sumInt
+  print ('Tổng là: $tong');
+
+  var sqrtvalue = sqrt(tong);
+  print('Căn bậc 2 của $tong là $sqrtvalue');
+  banner();
+
+}
+
+//Kêt quả chạy thử:
+========================================================
+Tổng là: 30
+Căn bậc 2 của 30 là 5.477225575051661
+========================================================
+</pre>
+    <a id="<?=$index_article[6][0]?>" name="<?=$index_article[6][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Khái niệm cơ bản</h2>
+<p>Một số thông tin, khái niệm cần biết trước khi đi sau vào ngôn ngữ <code>Dart</code></p>
+<ul>
+    <li>Mọi thứ lưu trong biến đều là đối tượng (kể cả số, kể cả null), mọi đối tượng đều sinh ra từ định nghĩa lớp,
+    mọi lớp đều kế thừa từ lớp cơ sở có tên <code>Object</code>  <i>(Giống C#)</i></li>
+    <li>Khi biến có chấp nhận mọi kiểu thì sử dụng từ khóa <code>dynamic</code></li>
+    <li>Dart hỗ trợ định nghĩa kiểu generic (giống C#)</li>
+    <li>Dart cho phép định nghĩa hàm trong hàm (lồng nhau)</li>
+    <li>Dart không có từ khóa <code>public, private, protected</code> khi khai báo phương thức, thuộc tính lớp.
+    Nếu thuộc tính, tên lớp bắt đầu bằng <code>_</code> thì hiểu đó là <code>private</code></li>
+    <li>Các định danh (tên biến, tên hàm, tên lớp ...) <code>bắt đầu</code> bằng chữ(a-zA-Z) hoặc <code>_</code>, <code>theo sau</code> là chuỗi chữ có thể kế hợp với số</li>
+</ul>
+    <a id="<?=$index_article[7][0]?>" name="<?=$index_article[7][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Quy tắc trình bày code</h2>
+<p>Những quy tắc này không bắt buộc bạn phải tuân theo, nhưng nếu áp dụng code sẽ trở nên sáng sủa, dễ đọc và thống nhất.</p>
+<ul>
+    <li>Nên đặt tên kiểu <code>UpperCamelCase</code> cho lớp, enums, tham số(chữ đầu của từ là chữ in: <code>HttpRequest </code>)</li>
+    <li>Tên file, thư viện viết chữ thường, các từ nối với nhau bởi <code>_</code>: <code>abc_xyz.dart</code></li>
+    <li>Biến, hằng, object đặt tên kiểu <code>lowerCamelCase</code>, chữ đầu các từ viết IN, trừ từ đầu tiên (<code>defaultTimeout</code>)</li>
+    <li>Cố gắng viết tắt khi tên trên 2 từ, lấy ký đầu viết IN để tạo chữ viết tắt (IOStream ~ InputOutputStream)</li>
+</ul>
+
+<?
+echo\XT\Core\Common\Common::createBottomIndex($index_article);
+?>
