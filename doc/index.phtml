@@ -1,0 +1,227 @@
+<?
+/**
+ * @var $this PhpRenderer
+ */
+$index_article =\XT\Core\Common\Common::sendevent('dynamic_load_phtml',
+    ['file'=>'module/Application/view/dynamiccontent/dart.php', 'view'=>$this])->last();
+
+$nav = $index_article->renderlist();
+
+\XT\Core\Common\Common::eventValue(\XT\Core\System\KeyView::startNav(),$nav);
+
+$index_article = [
+    ['Arithmetic' , '<strong>Phép toán số học</strong>'],
+    ['Assignment' , '<strong>Phép gán trong Dart</strong>'],
+    ['Equality' , '<strong>Phép so sánh</strong>'],
+    ['Logical' , '<strong>Phép toán Logic</strong>'],
+    ['Conditional' , '<strong>Biểu thức điều kiện</strong>'],
+    ['Other' , '<strong>Một số toán tử khác</strong>'],
+
+];
+
+?>
+    <a id="<?=$index_article[0][0]?>" name="<?=$index_article[0][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Toán tử số học trong Dart</h2>
+    <table class="table table-sm">
+        <tr>
+            <th>Toán tử</th>
+            <th>Ý nghĩa</th>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>+</code></td>
+            <td>Phép cộng. <code>5 + 6</code> kết quả <code>11</code></td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>-</code></td>
+            <td>Phép trừ. <code>5 - 6</code> kết quả <code>-1</code></td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>*</code></td>
+            <td>Phép nhân
+                <pre class="prettyprint lang-js">var a = 5;
+var b = 6;
+print(a * b); //30</pre>
+            </td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>/</code></td>
+            <td>Phép chia. <code>5 / 6</code> kết quả <code>0.8333333333333334</code></td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code> ~/ </code></td>
+            <td>Phép chia lấy phần nguyên. <code>6 ~/ 4</code> kết quả <code>1</code></td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>%</code></td>
+            <td>Phép chia modulo (lấy phần dư) <code>6 % 4</code> kết quả <code>2</code></td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>-biểu_thức</code></td>
+            <td>Đổi dấu kết quả biểu thức <code>-(5 - 6)</code> kết quả <code>1</code></td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>++var</code></td>
+            <td><code>var = var + 1</code>. Thêm <code>1</code> vào <code>var</code>, trong biểu thức việc tăng này
+                được thực hiện trước.
+                <pre class="prettyprint lang-js">
+var a = 5;
+var c = 10 + (++a);  //a tăng thêm 1, a thành 6
+print(a);            //6
+print(c);            //16
+</pre>
+            </td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>var++</code></td>
+            <td><code>var = var + 1</code>. Thêm <code>1</code> vào <code>var</code>, trong biểu thức việc tăng này
+                được thực hiện sau.
+                <pre class="prettyprint lang-js">
+var a = 5;
+var c = 10 + (++a);  //Tính c với a = 5, sau đó mới tăng a
+print(a);            //6
+print(c);            //15
+</pre>
+            </td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>--var</code></td>
+            <td><code>var = var - 1</code>. Bớt <code>var</code> đi <code>1</code>,
+                việc bớt này thực hiện trước trong biểu thức.
+            </td>
+        </tr>
+        <tr>
+            <td  class="bg-light"><code>var--</code></td>
+            <td><code>var = var - 1</code>. Bớt <code>var</code> đi <code>1</code>,
+                việc bớt này thực hiện sau trong biểu thức.
+            </td>
+        </tr>
+    </table>
+
+    <a id="<?=$index_article[1][0]?>" name="<?=$index_article[1][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Phép gán trong Dart</h2>
+    <p>Phép gán là <code class="font30">=</code>, để thực hiện gán giá trị biểu thức bên phải vào biến ở phía bên trái toán tử.</p>
+    <pre class="prettyprint lang-js">biến = biểu_thức;</pre>
+    <pre class="prettyprint lang-js">var a = 1 + 2 + 3 + 4;</pre>
+    <p>Phép toán gán có trường hợp viết phức tạp kết hợp cùng một toán tử khác phía trước dạng <code>toán_tử_trước=</code>
+        như <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/*</code> ... Điều này có nghĩa là biến và biểu thức
+        bên phải thực hiện toán tử phía trước, giá trị được bao nhiêu gán vào biến.</p>
+
+    <pre class="prettyprint lang-js">
+a *= 5;  // Tương đương a = a * 5;
+a +=5;   // Tương đương a = a + 5;
+a / 5;   // Tương đương a = a / 5;
+</pre>
+
+    <a id="<?=$index_article[2][0]?>" name="<?=$index_article[2][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Toán tử so sánh trong Dart</h2>
+    <p>Các toán tử này thực hiện trên biểu thức logic, kết quả là <code>true</code> hoặc <code>false</code></p>
+
+    <table class="table table-sm">
+        <tr>
+            <th>Toán tử</th>
+            <th>Ý nghĩa</th>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>==</code></td>
+            <td>So sánh bằng <code>5 == 5</code> kết quả <code>true</code>, <code>5 == 6</code> kết quả <code>false</code></td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>!=</code></td>
+            <td>So sánh khác <code>5 != 5</code> kết quả <code>false</code>, <code>5 != 6</code> kết quả <code>true</code></td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>&gt;</code></td>
+            <td>So sánh lớn hơn <code>5 &gt; 5</code> kết quả <code>false</code>, <code>6 &gt; 5</code> kết quả <code>true</code></td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>&lt;</code></td>
+            <td>So sánh nhỏ hơn <code>5 &lt; 5</code> kết quả <code>false</code>, <code>5 &gt; 6</code> kết quả <code>true</code></td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>&lt;=</code></td>
+            <td>So sánh nhỏ hơn hoặc bằng</td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>&gt;=</code></td>
+            <td>So sánh lớn hơn hoặc bằng</td>
+        </tr>
+    </table>
+
+    <a id="<?=$index_article[3][0]?>" name="<?=$index_article[3][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Toán tử logic Dart</h2>
+
+    <table class="table table-sm">
+        <tr>
+            <th>Toán tử</th>
+            <th>Ý nghĩa</th>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>||</code></td>
+            <td>Phép logic hoặc, <code>a || b</code> kết quả <code>true</code> nếu <code>a</code>
+                hoặc <code>b</code> là <code>true</code></td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>&&</code></td>
+            <td>Phép logic và, <code>a && b</code> kết quả <code>true</code> nếu <code>a</code>
+                và <code>b</code> đều <code>true</code></td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>!biểu_thức</code></td>
+            <td>Phép phủ định <code>!a</code> nếu <code>a</code> là <code>true</code> thì kết quả phép toán là <code>false</code></td>
+        </tr>
+    </table>
+
+    <a id="<?=$index_article[4][0]?>" name="<?=$index_article[4][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Biểu thức điều kiện</h2>
+    <pre class="prettyprint lang-js">
+biểu_thức_điều_kiện ? biểu_thức_1 : biểu_thức_2
+</pre>
+    <p>Biểu thức tổng hợp trên kết hợp từ ba biểu thức con. Nếu điều kiện là đúng thì giá trị tính theo <code>biểu_thức_1</code>, ngược lại
+        là <code>biểu_thức_2</code></p>
+    <pre class="prettyprint lang-js">
+var a = 4;
+var b = 10;
+var d = (a > b) ? a : b;
+//Kết quả d = 10
+</pre>
+    <pre class="prettyprint lang-js">biểu_thức_1 ?? biểu_thức_2</pre>
+    <p>Biểu thức kết hợp với <code>??</code>, nếu <code>biểu_thức_1</code> khác null thì lấy <code>biểu_thức_1</code>, ngược
+        lại lấy giá trị từ <code>biểu_thức_2</code></p>
+    <a id="<?=$index_article[5][0]?>" name="<?=$index_article[5][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Một số toán tử trên lớp, đối tượng</h2>
+
+    <table class="table table-sm">
+        <tr>
+            <th>Toán tử</th>
+            <th>Ý nghĩa</th>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>[]</code></td>
+            <td>Truy cập phần tử mảng</td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>.</code></td>
+            <td>Truy cập phương thức, thuộc tính đối tượng</td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>.</code></td>
+            <td>Truy cập phương thức, thuộc tính đối tượng khi đối tượng đó khác null
+                <code>myobject?.method();</code>
+            </td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>as</code></td>
+            <td>Chuyển kiểu: <code>(var as MyClass)</code></td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>is</code></td>
+            <td>Kiểm tra kiểu: <code>(var is MyClass)</code></td>
+        </tr>
+        <tr>
+            <td class="bg-light"><code>is!</code></td>
+            <td>Kiểm tra kiểu: <code>(var is! MyClass)</code></td>
+        </tr>
+    </table>
+<?
+echo\XT\Core\Common\Common::createBottomIndex($index_article);
+?>
