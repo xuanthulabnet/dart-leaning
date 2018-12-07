@@ -1,0 +1,163 @@
+<?
+/**
+ * @var $this PhpRenderer
+ */
+$index_article =\XT\Core\Common\Common::sendevent('dynamic_load_phtml',
+    ['file'=>'module/Application/view/dynamiccontent/dart.php', 'view'=>$this])->last();
+
+$nav = $index_article->renderlist();
+
+\XT\Core\Common\Common::eventValue(\XT\Core\System\KeyView::startNav(),$nav);
+
+$index_article = [
+    ['function' , '<strong>Xây dựng hàm trong Dart</strong>'],
+    ['thamsomacdinh' , '<strong>Giá trị tham số mặc định</strong>'],
+    ['thamsotuychon' , '<strong>Hàm có tham số tùy chọn</strong>'],
+    ['arrow' , '<strong>Xây dựng hàm với ký hiệu mũi tên</strong>'],
+    ['andanh' , '<strong>Hàm ẩn danh (lambda , closure)</strong>'],
+
+
+
+
+];
+
+?>
+
+
+    <a id="<?=$index_article[0][0]?>" name="<?=$index_article[0][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Hàm trong Dart</h2>
+    <p>Hàm là một khối lệnh thực hiện một tác vụ gì đó, khối lệnh này được dùng nhiều lần nên gom chúng tại thành một hàm.
+    Trong Dart mọi thứ đều là đối tượng nên hàm cũng là một đối tượng (kế thừa Function).
+    </p>
+<p>Đây là một khai báo hàm</p>
+<pre class="prettyprint lang-js">
+double tinhtong(var a, double b, double c) {
+  return a + b + c;
+}
+//HOẶC
+double tinhtong(var a, double b, double c) {
+  return a + b + c;
+}
+
+//GỌI HÀM
+var x = tinhtong(1,2,3);
+print(x); //6.0
+</pre>
+<p>Như vậy khi khai báo hàm ta có thể có các thành phần sau:</p>
+<ul>
+    <li>Chỉ ra kiểu giá trị trả về của hàm (ví dụ <code>double</code>), giá trị trả về bằng biểu thức của lệnh <code>return</code>.
+        Với Dart thiếu việc khai báo kiểu giá trị trả về hàm vẫn hoạt động tốt. Còn khi có chỉ rõ kiểu trả về thì
+    giá trị trong biểu thức <code>return</code> phái trùng với kiểu khai báo hàm.</li>
+    <li>Tham số được liệt kê sau tên hàm trong cặp <code>()</code> như trên có ba tham số a,b,c</li>
+    <li>Hàm kết thúc khi chạy hết khối lệnh hoặc gặp lệnh <code>return</code>, giá trị hàm là biểu thức sau <code>return</code>,
+    nếu thiếu giá trị hàm sẽ là <code>null</code></li>
+    <li>Gọi hàm thì viết tên hàm và truyền đúng tham số theo thứ tự yêu khai báo</li>
+</ul>
+    <a id="<?=$index_article[1][0]?>" name="<?=$index_article[1][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Giá trị tham số mặc định của hàm</h2>
+<p>Nếu bạn muốn tham số có giá trị mặc định, nghĩa là khi gọi hàm mà thiếu giá trị cho tham số đó, thì nó sẽ nhận mặc định.
+Ví dụ</p>
+<pre class="prettyprint lang-js">
+double tinhtong(var a, {double b:1, double c:2}) {
+  return a + b + c;
+}
+
+var v1 = tinhtong(1);
+print(v1); //4.0
+
+var v2 = tinhtong(1, c:10);
+print(v2);  //12.0
+
+var v3 = tinhtong(1, c:2, b:10);
+print(v3); //13.0
+
+</pre>
+<p>Hàm trên tham số b mặc định là 1, c mặc định là 2. Nếu không chỉ ra tham số này khi gọi nó sẽ dùng mặc định, còn muốn
+chỉ ra khi gọi thì truyền theo cú pháp <code>tên_tham_số:giá_trị</code>, như ví dụ trên <code>tinhtong(1, c:2, b:10)</code></p>
+
+<a id="<?=$index_article[2][0]?>" name="<?=$index_article[2][0]?>"></a>
+<h2 class="text-danger display-4 font30">Hàm với tham số tùy chọn</h2>
+<p>Các tham số tùy chọn của hàm có nghĩa là khi họi hàm có sử dụng hoặc không. Các tham số tùy chọn gom lại trong <code>[]</code>,
+nếu khi gọi hàm không có tham số này thì nó nhận giá trị <code>null</code></p>
+<pre class="prettyprint lang-js">
+double tinhtong(var a, [double b, double c]) {
+   var tong = a;
+   if (b != null)
+    tong += a;
+
+   tong += (c!=null) ?  c: 0;
+}
+
+print(tinhtong(1));       //1.0
+print(tinhtong(1,2));     //3.0;
+print(tinhtong(1,2,3));   //6.0;
+</pre>
+    <a id="<?=$index_article[3][0]?>" name="<?=$index_article[3][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Hàm với kỹ hiệu mũi tên <code>=></code></h2>
+
+<p>Với những hàm chỉ có một biểu thức trả về luôn, thì có thể có cách viết ngắn gọn bằng ký hiệu mũi tên</p>
+    <pre class="prettyprint lang-js">
+  double tinhtong(var a, var b) {
+    return a + b;
+  }
+
+  // Có thể viết lại thành
+
+  double tinhtong(var a, var b) => a + b;
+</pre>
+
+    <a id="<?=$index_article[3][0]?>" name="<?=$index_article[3][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Hàm ẩn danh - lambda - closure</h2>
+<p>Hầu hết khai báo hàm là có tên hàm, tuy nhiên trong nhiều ngữ cảnh khai báo hàm và không dùng đến tên, hàm đó gọi
+là hàm ẩn danh còn gọi là <code>lambda</code> hoặc <code>closure</code></p>
+<p>Tạo ra hàm ẩn danh thì làm như hàm có tên bình thường, chỉ có điều phần kiểu trả về và tên bị thiếu.</p>
+<pre class="prettyprint lang-js">
+(var a, var b) {
+    return a + b;
+};
+
+//Có thể dùng ký hiệu mũi tên  () => {}
+(var a, var b) => {
+    return a + b;
+}
+
+//Nếu chỉ có 1 biểu thức trả về như trên có thể viết gọn hơn
+(var a, var b) => return a + b;
+</pre>
+<p>Khai báo trên là hàm ẩn danh, nhưng để sử dụng nó thì ra lệnh cho nó chạy luôn hoặc gán nó vào một biến rồi dùng
+biến gọi hàm.</p>
+<pre class="prettyprint lang-js">
+//Khai báo xong chạy luôn
+var x = (var a, var b) {
+    return a + b;
+}(5,6);
+
+print(x);                   //11
+</pre>
+<pre class="prettyprint lang-js">
+//Gán hàm ẩn danh vào biến ham, rồi dùng nó chạy
+var ham = (var a, var b) {
+    return a + b;
+};
+
+print(ham(10,11));          //21
+</pre>
+<p>Hàm ẩn danh rất tiện dụng để làm tham số (callback) trong các hàm khác, thậm chí khai báo luôn một ẩn danh ở
+tham số hàm</p>
+<pre class="prettyprint lang-js">
+f1(var a, var b, var printmessage) {
+     var c = a + b;
+     printmessage(c);
+}
+
+
+f1(1, 2, (x) { print('Tổng là: $x');});         //Tổng là: 3
+f1(1, 2, (z) => print('SUM = $z'));             //SUM = 3
+
+</pre>
+
+
+
+<?
+echo\XT\Core\Common\Common::createBottomIndex($index_article);
+?>
