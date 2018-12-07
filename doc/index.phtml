@@ -1,0 +1,226 @@
+<?
+/**
+ * @var $this PhpRenderer
+ */
+$index_article =\XT\Core\Common\Common::sendevent('dynamic_load_phtml',
+    ['file'=>'module/Application/view/dynamiccontent/dart.php', 'view'=>$this])->last();
+
+$nav = $index_article->renderlist();
+
+\XT\Core\Common\Common::eventValue(\XT\Core\System\KeyView::startNav(),$nav);
+
+$index_article = [
+    ['var' , '<strong>Biến, khai báo - khởi tạo</strong>'],
+    ['const' , '<strong>Hằng số (const, final)</strong>'],
+    ['types' , '<strong>Kiểu dữ liệu</strong>'],
+
+
+];
+
+?>
+    <a id="<?=$index_article[0][0]?>" name="<?=$index_article[0][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Khai báo biến, khởi tạo biến</h2>
+    <p>Biến để lưu các đối tượng khi ứng dụng hoạt động, để tạo ra biến dùng từ khóa <code>var</code> với cú pháp như sau.</p>
+    <pre class="prettyprint lang-js">
+main() {
+    <i>
+    // Khai báo biến a, khởi tạo nó lưu một chuỗi
+    // (do vậy a có kiểu String, nó chỉ lưu chuỗi)</i>
+    var a = "Learn Dart";
+
+    a = "Learn Dart 2";   <i>// Gán chuỗi khác</i>
+    a = 100;              <i>// Lỗi vì gán số vào a
+
+    // Khai báo và không khởi tạo
+    // biến b sẽ có giá trị null - lúc này
+    // kiểu của b tùy thuộc vào giá trị gán vào nó</i>
+    var b;
+    b = 100;            <i>// Gán số vào b</i>
+    b = "aaa";          <i>// Gán chuỗi vào b</i>
+}
+</pre>
+    <p>Bạn cũng có thể khai báo và chỉ định kiểu dữ liệu cụ thể cho nó luôn, khi chỉ định kiểu cụ thể mỗi khi
+        gán dữ liệu vào biến thì giá trị phải cùng kiểu</p>
+    <pre class="prettyprint lang-js">
+String  s     = 'Chuỗi ký tự'; // Khai báo biến chuỗi
+double  d     = 1.1234;        // khai báo biến số thực
+int     i     = 1;             // biến số nguyên
+bool    found = true;          // biến logic
+</pre>
+    <p>Trong trường hợp bạn sử dụng biến mà biến đó không xét đến kiểu (chấp nhận gán vào nó nhiều loại kiểu) thì dùng
+        từ khóa <code>dynamic</code></p>
+    <pre class="prettyprint lang-js">
+dynamic dyn = 123;             // Khởi tạo là số int
+dyn = "Dynamic";               // Gán chuỗi
+dyn = 1.12345;                 // Gán số double
+</pre>
+
+    <a id="<?=$index_article[1][0]?>" name="<?=$index_article[1][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Hằng số khai báo và sử dụng</h2>
+    <p>Hằng số lưu giá trị mà không thể thay đổi, sử dụng từ khóa <code>const</code> hoặc <code>final</code>
+        để tạo ra hằng số.</p>
+    <h3 class="text-dark display-4 font30">Tạo hằng số const</h3>
+    <pre class="prettyprint lang-js">
+const ten_hang_s0 = biểu_thức_giá_trị;
+
+//Ví dụ
+const dow_0     = 'Sunday';
+const dow_1     = 'Monday';
+const minutes   = 24 * 60;
+</pre>
+    <p>Cách khai bao trên gọi là hằng số lúc biên dịch, giá trị của nó phải là cụ thể ngay lúc bạn viết code.</p>
+
+    <h3 class="text-dark display-4 font30">Tạo hằng số final</h3>
+    <p>Thực ra đây giống như khai báo biến, nhưng biến <code>final</code> chỉ được gán một lần duy nhất, gán lần thứ 2 sẽ lỗi (trước khi
+        sử dụng phải có 1 lần gán). Nó gọi là hằng số lúc chạy, giá trị hằng số này có thể khác nhau mỗi lần chạy</p>
+    <p>Cú pháp như sau</p>
+    <pre class="prettyprint lang-js">
+final name_1          = biểu_thức_giá_trị;
+final String name_2   = biểu_thức_giá_trị; //Chỉ rõ luôn kiểu của hằng
+</pre>
+    <pre class="prettyprint lang-js">
+var so_ngau_nhien = Random(1000).nextInt(500);
+
+//Tạo hằng số
+final a = so_ngau_nhien * 2;
+</pre>
+    <p>Như ví dụ trên, tạo ra hàng số a. Hằng số này sau khi khởi tạo thì không thay đổi nữa. Vấn đề hằng số này được khởi tạo
+        bằng một giá trị ngẫu nhiên sinh ra bởi hàm Random, vậy mỗi lần chạy ứng dụng hằng số này có thể có giá trị khác nhau.
+        Nó khác với <code>const</code> là cố định ngay từ khi viết code (hằng số biên dịch).</p>
+    <p>Ví dụ sau sẽ bị lỗi</p>
+    <pre class="prettyprint lang-js">
+var so_ngau_nhien = Random(1000).nextInt(500);
+const a = so_ngau_nhien * 2;
+
+<span class="text-danger">test.dart:7:13: Error: Not a constant expression.</span>
+</pre>
+    <p>Lỗi vì bạn không thể biết a bằng bao nhiêu khi đọc code</p>
+
+    <a id="<?=$index_article[2][0]?>" name="<?=$index_article[2][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Các kiểu dữ liệu trong Dart, phép toán cơ bản</h2>
+    <p>Dart đang hỗ trợ các nhóm kiểu dữ liệu: <code>Số</code>, <code>Chuỗi</code>, <code>Logic</code>, <code>Mảng</code>,
+        <code>symbol</code>, <code>Runes</code> (chuỗi Unicode 32-bit)</p>
+    <table class="table">
+        <tr>
+            <th>Kiểu</th>
+            <th>Mô tả</th>
+        </tr>
+        <tr>
+            <td><code>int</code></td>
+            <td>Biểu diễn các giá trị số nguyên
+                <pre class="prettyprint lang-js">
+int numint = 100;</pre>
+                Đổi chữ thành số nguyên
+                <pre class="prettyprint lang-js">
+int numint = int.parse("120");</pre>
+            </td>
+        </tr>
+        <tr>
+            <td><code>double</code></td>
+            <td>Biểu diễn giá trị số thực 64bit
+                <pre class="prettyprint lang-js">
+double d1 = 100; //100.0
+double d2 = 0.1234;
+var    d3 = 12.123;</pre>
+                Đổi chuỗi thành số thực
+                <pre class="prettyprint lang-js">var abc = double.parse("123.123");</pre>
+                Cả số nguyên và số thực có các phép toán để tạo thành biểu thức là (cộng,trừ,nhân,chia)<br> <code>+</code> <code>-</code> <code>*</code> <code>/</code>
+                <pre class="prettyprint lang-js">double c = (a + b) / (a-b);</pre>
+                <p>Trên các đối tượng số này có các phương thức để chuyển đổi kiểu <code>toString()</code>, <code>toInt()</code>,
+                    <code>toDouble()</code></p>
+                <pre class="prettyprint lang-js">double a = 10.10;
+int    b = a.toInt();
+String c = (a + b).toString();</pre>
+            </td>
+        </tr>
+        <tr>
+            <td style="white-space: nowrap"><code>string</code></td>
+            <td>
+                Biểu diễn chuỗi ký tự Unicode(UTF-16). Nó được nhập vào trong cặp nháy đơn <code>''</code> hoặc nháy kép <code>""</code>. Dùng ký hiệu <code>\"</code>,
+                <code>\'</code> để biểu diễn ký tự <code>'</code>, <code>"</code> trong chuỗi
+                <pre class="prettyprint lang-js">String a = 'Chuỗi ký tự \'\' (nháy đơn)';  // Chuỗi ký tự '' (nháy đơn)
+String b = "Chuỗi ký tự \"\" (nháy kép)";  // Chuỗi ký tự "" (nháy kép)</pre>
+                Để nối các chuỗi lại với nhau dùng toán tử <code>+</code>, kiểm tra hai chuỗi giống nhau không dùng <code>==</code>
+                <pre class="prettyprint lang-js">String s1 = "S1";
+String s2 = "S2";
+String s3 = s2 + '_' + s1;
+print(s3); //S1_S2</pre>
+                Muốn nhập chuỗi trên nhiều dòng, dùng cú pháp sau (các dòng nằm giữa cặp <code>...</code> hoặc <code>***</code>);
+                <pre class="prettyprint lang-js">
+String s1 = '''
+Các dòng
+chữ trong chuỗi s1
+''';
+
+print(s1);
+
+//Hoặc
+String s2 = """
+Các dòng
+chữ trong chuỗi s2
+""";
+print(s2);</pre>
+                Có thể chèn một biến hoặc một biểu thức vào chuỗi bằng cách ký hiệu <code>$tên_biến</code>, <code>${biểu thức giá trị}</code>
+
+                <pre class="prettyprint lang-js">var a = 10;
+var b = 20;
+
+String kq = "Hai số $a, $b có tổng ${a + b}";
+print(kq); //Hai số 10, 20 có tổng 30</pre>
+            </td>
+
+        </tr>
+        <tr>
+            <td><code>bool</code></td>
+            <td>Biểu diễn logic đúng / sai với hai giá trị <code>true</code> và <code>false</code>.
+                <pre class="prettyprint lang-js">bool found = true;
+
+if (found) {
+    //Do something
+}</pre></td>
+        </tr>
+
+        <tr>
+            <td><code>Mảng</code></td>
+            <td>Còn gọi là danh sách list, nó lưu tập hợp các dữ liệu, nó giống khái niệm này của JavaScript.
+                Khởi tạo một mảng dùng ký hiệu <code>[]</code>, giá trị các phần tử liệt kê cách nhau bởi <code>,</code>.
+                Các phần tử mảng có chỉ số từ 0, để truy câp đến phần tử nào dùng ký hiệu <code>[chỉ_sổ]</code>
+                <pre class="prettyprint lang-js">var dow = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
+print(dow.length);          //Số phần tử trong mảng
+print(dow[0]);              //Lấy phần từ đầu tiên, chỉ số 0
+dow[6] = 'Chủ nhật';        //Gán giá trị mới cho phần tử chỉ số 6
+print(dow[6]);
+
+//Kết quả
+7
+T2
+Chủ nhật</pre>
+
+            </td>
+        </tr>
+        <tr>
+            <td><code>Map</code></td>
+            <td>Cũng lưu tập hợp các giá trị (còn gọi là mảng kết hợp), thay vì sử dụng chỉ số từ 0 để tham chiếu
+                đến phần tử, chỉ số của Map tự do đánh. Tức là mỗi phần tử trong Map lưu theo cặp <code>key:value</code>,
+                dùng ký hiệu <code>{}</code> để khởi tạo Map hoặc khởi tạo bằng <code>Map(); Truy cập đến phần tử Map dùng
+                    ký hiệu chấm <code>.key</code></code>
+                <pre class="prettyprint lang-js">var dow = {
+    'T2' : 'Thứ 2',
+    'T3' : 'Thứ 3',
+    'CN' : 'Chủ Nhật'
+};
+
+print(dow.length);                     //Số phần tử
+print(dow['T2']);                      //Truy cập phần tử chỉ số T2
+dow.putIfAbsent('T4', () => 'Thứ 4');  //Thêm phần tử mới nếu chưa có
+
+//Cũng có thể tạo ra Map bằng
+//var dow = new Map();</pre>
+                <p>Phần sau sẽ trình bày chi tiết về Map</p>
+
+            </td>
+        </tr>
+    </table>
+<?
+echo\XT\Core\Common\Common::createBottomIndex($index_article);
+?>
