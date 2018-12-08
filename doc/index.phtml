@@ -10,349 +10,313 @@ $nav = $index_article->renderlist();
 \XT\Core\Common\Common::eventValue(\XT\Core\System\KeyView::startNav(),$nav);
 
 $index_article = [
-    ['class' , '<strong>Khai báo class trong Dart</strong>'],
-    ['Constructors' , '<i>Hàm tạo có tên</i>'],
-    ['StaticMethod' , '<i>Phương thức tĩnh</i>'],
-    ['SetterGetter' , '<i>Tạo setter / getter</i>'],
-    ['Inheritance' , '<strong>Tính kế thừa của lớp</strong>'],
-    ['ConstructorsChild' , '<i>Khởi tạo tại lớp con và truy cập lớp cha</i>'],
-    ['Overriding' , '<i>Overriding - Nạp chồng</i>'],
-    ['Abstract' , '<i>Abstract - Lớp trừu tượng</i>'],
-    ['interface' , '<i>Khái niệm về interface trong Dart</i>'],
-    ['mixin' , '<i>Sử dụng các mixins</i>'],
-    ['other' , '<strong>Một số lưu ý bổ sung về lớp</strong>'],
-    ['Object' , '<i>Lớp Object</i>'],
-    ['Cascade' , '<i>Toán tử <code>..</code></i>'],
+    ['enum' , '<strong>Liệt kê enum</strong>'],
+    ['Iterable' , '<strong>Danh sách duyệt qua được Iterable</strong>'],
+    ['list' , '<strong>Danh sách (Mảng) List</strong>'],
+    ['map' , '<strong>Ánh xạ - Map</strong>'],
+    ['set' , '<strong>Tập hợp - Set</strong>'],
+    ['other' , '<strong>Một số cấu trúc dữ liệu phức tạp</strong>'],
+    ['Queue' , '<i>Hàng đợi - Queue</i>'],
+    ['HashMap' , '<i>HashMap</i>'],
+    ['HashSet' , '<i>HashSet</i>'],
+    ['LinkedList' , '<i>LinkedList</i>'],
 
 
 ];
 
 ?>
-
+    <p>Trong phần này chúng ta sẽ tìm hiểu một số cấu trúc dữ liệu cơ bản đã triển khai sẵn trong ngôn ngữ lập trình Dart:</p>
 
     <a id="<?=$index_article[0][0]?>" name="<?=$index_article[0][0]?>"></a>
-    <h2 class="text-danger display-4 font30">Class trong Dart</h2>
-<p>Class để tạo ra các đối tượng, với Dart mọi thứ kể cả số đều là đối tượng, các đối tượng đề kế thừa từ
-class <code>Object</code></p>
-<p>Trong một class nó có thể có các thành phần:</p>
-<ul>
-    <li>Các phương thức khởi tạo - Hàm được gọi khi tạo ra một đối tượng mới từ class</li>
-    <li>Các biến lưu dữ liệu của đối tượng - gọi là các trường - các thuộc tính</li>
-    <li>Các hàm - gọi là các thành viên hàm - các phương thức</li>
-    <li>Các hàm đặc biệt gọi khi thực hiện gán thuộc tính / truy cập thuộc tính - hầm setter/getter</li>
-</ul>
-<p>Từ lớp đã có khởi tạo đối tượng bằng cách gọi hàm khởi tạo của nó với toán tử <code>new</code>, sau khi có đối
-tượng thì truy cập vào các thành viên (phương thức, thuộc tính) bằng ký hiệu chấm <code>.</code> như <code>object.phuongthuc();</code></p>
-<p>Khai báo một lớp thì dùng từ khóa <code>class</code>, ví dụ sau khai báo một lớp:</p>
-<pre class="prettyprint lang-js">
-class Product {
-  //Khai báo các thuộc tính
-  String manufacture = '';
-  String name = '';
-  var    price;
-  int    quantity;
-
-  //Khai báo hàm khởi tạo
-  Product(var price, {int quantity:0}) {
-    this.price    = price;
-    this.quantity = quantity;
-  }
-
-
-  //Khai báo các phương thức
-  calulateTotal() {
-    return this.price * this.quantity;
-  }
-
-  showTotal() {
-    var tong = this.calulateTotal();
-    print("Tổng số tiền là: $tong");
-  }
+    <h2 class="text-danger display-4 font30">Cấu trúc dữ liệu liệt kê enum</h2>
+    <p>Trong Dart đây là một loại lớp đặc biệt, biểu diễn một tập hợp cố định các hằng số. Để tạo ra một <code>enum</code>
+        dùng từ khóa <code>enum</code> khai báo các phần tử liệt kê theo tên cách nhau bởi <code>,</code> ví dụ:</p>
+    <pre class="prettyprint lang-js">
+enum UserGroup {guest, member, admin}
+</pre>
+    <p>Enum rất tiện lợi dùng với câu lệnh <code>switch</code></p>
+    <pre class="prettyprint lang-js">
+var user_group = UserGroup.admin;
+switch (user_group) {
+    case UserGroup.admin:
+      print('Quản trị hệ thống');
+    break;
+    case UserGroup.guest:
+      print('Khách');
+    break;
+    default:
 }
-
 </pre>
-<p>Sử dụng</p>
-<pre class="prettyprint lang-js">
-var product = new Product(600, quantity: 1);
-product.showTotal();
-
-product.quantity = 2;
-product.showTotal();
-
-//KẾT QUẢ CHẠY
-Tổng số tiền là: 600
-Tổng số tiền là: 1200
-</pre>
-
-<p>Như vậy ta thấy <strong>khai báo thuộc tính, phương thức</strong> trong lớp tương tự như khai báo biến và hàm thông
-thường chỉ có điều nó nằm trong <code>class</code></p>
-<p>Để truy cập vào một phương thức, thuộc tính dùng ký kiệu chấm <code class="font30">.</code> ví dụ
-<code>product.quantity = 2</code>, <code>product.showTotal()</code>
-</p>
-<p>Trong phương thức của lớp, để tham khảo đến đối tượng của lớp dùng từ khóa <code class="font25">this</code>, ví dụ trong hàm
-<code>calulateTotal()</code> có đoạn <code>return this.price * this.quantity</code></p>
-<p>Khi đã có lớp, việc tạo ra đối tượng lớp thì dùng toán tử <code>new</code>, <code>var product = new Product(600, quantity: 1)</code>
-hoặc không cần toán tử <code>new</code> vẫn được chấp nhận <code>product = Product(600, quantity: 1)</code></p>
-<p>Khi khởi tạo như vậy, nó sẽ gọi đến hàm có cùng tên với lớp, gọi là hàm khởi tạo - để thiết lập các thông
-    tin cho lớp, ở ví dụ trên có một hàm khởi tạo <code>Product(var price, {int quantity:0})</code>,
-    tuy nhiên bạn có thể tạo ra nhiều hàm tạo có tên gọi theo nguyên tắc như sau:</p>
-
     <a id="<?=$index_article[1][0]?>" name="<?=$index_article[1][0]?>"></a>
-    <h2 class="text-primary display-4 font25">Hàm khởi tạo có tên</h2>
-<p>Giả sử sẽ tạo ra hàm tạo tên <code>iphone</code> để khởi tạo một loại sản phẩm cụ thể, thì khai báo trong lớp như sau:</p>
-
-<pre class="prettyprint lang-js">
-class Product {
-  // ...
-  Product.iphone(var price, {int quantity:0}) {
-    this.price       = price;
-    this.quantity    = quantity;
-    this.manufacture = 'Apple';
-  }
-  // ...
+    <h2 class="text-danger display-4 font30">Cấu trúc dữ liệu Iterable</h2>
+    <p>Iterable là một lớp generic biểu diễn tập hợp dữ liệu mà có thể duyệt qua hết phần tử này đến phần tử khác.
+        Nghĩa là nó hỗ trợ <code>moveNext()</code> để đi đến phần tử tiếp theo, lấy dữ liệu phần tử hiện tại
+        bằng <code>iterator.current</code>
+    </p>
+    <p>Thường thì <code>Iterable</code> được tạo ra, liên kết với một loại kiểu dữ liệu tập hợp khác như List, Map ...Xem các
+        loại cấu trúc dữ liệu này để tìm hiểu về Interable</p>
+    <p>Duyệt qua các phần tử Iterable</p>
+    <pre class="prettyprint lang-js">
+//Sinh ra Iterable chứa 100 phần tử số từ 0 - đến 99
+var iterable = new Iterable.generate(100);
+for (var item in iterable) {
+    print(item);
 }
+//0
+//1
+...
+//99
 </pre>
-<p>Nếu vậy bạn có thể khởi tạo bằng hàm tạo này</p>
-<pre class="prettyprint lang-js">
-var product = Product.iphone(700, quantity: 2);
+    <p>Hoặc duyệt qua bằng forEach</p>
+    <pre class="prettyprint">
+iterable.forEach((f) {
+    print(f);
+});
 </pre>
+    <p><strong>Các phương thức / thuộc tính hay dùng trên mảng - danh sách</strong></p>
+    <table class="table table-sm">
+        <tr>
+            <th>Phương thức</th>
+            <th>Sử dụng</th>
+        </tr>
+        <tr>
+            <td><code>isEmpty</code></td>
+            <td>Thuộc tính kiểm tra xem mảng rỗng</td>
+        </tr>
+        <tr>
+            <td><code>isNotEmpty</code></td>
+            <td>Thuộc tính kiểm tra xem mảng không rỗng</td>
+        </tr>
+        <tr>
+            <td><code>length</code></td>
+            <td>Thuộc tính trả về số lượng phần tử mảng</td>
+        </tr>
+        <tr>
+            <td><code>first</code></td>
+            <td>Thuộc tính trả về phần tử đầu tiên, tương đương với <code>[0]</code>, lỗi nếu mảng rỗng</td>
+        </tr>
+        <tr>
+            <td><code>last</code></td>
+            <td>Thuộc tính trả về phần tử đầu cuối</td>
+        </tr>
+        <tr>
+            <td><code>forEach()</code></td>
+            <td>Duyệt qua các phần tử
+                <pre class="prettyprint">
+  iterable.forEach((f) {
+    print(f);
+  });
+</pre>
+            </td>
+        </tr>
+    </table>
+
     <a id="<?=$index_article[2][0]?>" name="<?=$index_article[2][0]?>"></a>
-    <h2 class="text-primary display-4 font25">Phương thức tĩnh</h2>
-<p>Các phương thức (hàm) trong lớp chỉ truy cập được trên một đối tượng cụ thể triển khai từ lớp (biến <code>product</code>),
-nhưng bạn có thể chỉ định phương thức là tĩnh bằng từ khóa <code>static</code>, thì hàm không cần đối tượng triển khai từ lớp
-    để hoạt động mà có thể gọi hàm đó thông qua tên lớp.
-    Ví dụ khai báo phương thức có tên <code>showListStore()</code> là phương thức tĩnh.</p>
-<pre class="prettyprint lang-js">
-class Product {
-  // ...
-  static showListStore() {
-    print('Store 1 ...');
-    print('Store 2 ...');
+    <h2 class="text-danger display-4 font30">Cấu trúc dữ liệu Danh sách - Mảng - List</h2>
+    <p>Trong Dart, danh sách (cũng là mảng) được định nghĩa từ lớp generic <code>List</code>, nó chứa một tập hợp các dữ liệu - mỗi
+        dữ liệu trong List là gọi là phần tử, vị trí của nó xác định bằng chỉ số bắt đầu từ <code>0</code>, truy cập đến
+        mảng (danh sách) dùng ký hiệu <code>[]</code> chứa chỉ số phần tử.</p>
+    <p>Có 2 loại List, đó là loại mà số phần tử có thể thay đổi và loại list có số phần tử cố định</p>
+    <p><strong>Khởi tạo một mảng cố định</strong></p>
+    <pre class="prettyprint">
+//Khai báo mảng cố định 2 phần tử
+var listState = new List(2);
+//Khởi tạo các phần tử trong mảng
+listState[0] = 'on';
+listState[1] = 'off';
+//Nếu truy cập listState[2] sẽ lỗi- vì List chỉ có 2 phần tử
+print(listState); //[on, off]
+</pre>
+    <p><strong>Khởi tạo một mảng thay đổi số phần tử được</strong></p>
+    <p>Nếu khi khởi tảo mà không chỉ ra số lượng phần tử thì nó là mảng thay đổi số phần tử được, lúc này có thể áp
+        dụng các hàm thêm, bớt phần tử sẽ nói phía dưới</p>
+    <pre class="prettyprint">
+//Khai báo mảng thay đổi được
+var dow = new List();
+
+//Thêm các phần tử vào mảng
+dow.add('Monday');
+dow.add('Tuesday');
+dow.add('Thursday');
+print(dow);             //[Monday, Tuesday, Thursday]
+//Xóa phần tủ cuối cùng
+dow.removeLast();
+print(dow);             //[Monday, Tuesday]
+</pre>
+    <p>Nếu muốn tạo ra mảng thay đổi được, và khởi tạo luôn dữ liệu ở phần khai báo thì dùng ký hiệu <code>[]</code></p>
+    <pre class="prettyprint">
+//Khởi tạo mảng với 2 phần tử
+var group = ['member', 'admin'];
+group.insert(0, 'guest'); //Chèn phần tử vào vị trí 0
+print(group);             //[guest, member, admin]
+</pre>
+    <p><strong>Các phương thức / thuộc tính hay dùng trên mảng - danh sách</strong></p>
+    <p>Ngoài các phương thức - thuộc tính giống như <code>Iterable</code> chú ý thêm:</p>
+    <table class="table table-sm">
+
+        <tr>
+            <td><code>reversed</code></td>
+            <td>Trả về một đối tượng <code>Iterable</code> chứa các phần tử mảng theo thứ tứ ngược lại</td>
+        </tr>
+
+        <tr>
+            <td><code>add()</code></td>
+            <td>Thêm một phần tử vào cuối <code>add(element)</code></td>
+        </tr>
+        <tr>
+            <td><code>insert()</code></td>
+            <td>Chèn một phần tử vào mảng ở vị trí i <code>insert(i,element)</code> </td>
+        </tr>
+        <tr>
+            <td><code>insertAll()</code></td>
+            <td>Chèn một một <code>Iterable</code> bắt đầu từ vị trí i: <code>insertAll(i,iterable)</code> </td>
+        </tr>
+        <tr>
+            <td><code>remove()</code></td>
+            <td>Xóa bỏ phần tử đầu tiền tìm thấy có giá trị chỉ ra <code>remove(data)</code></td>
+        </tr>
+        <tr>
+            <td><code>removeAt()</code></td>
+            <td>Xóa bỏ phần tử ở vị trí i <code>removeAt(i)</code></td>
+        </tr>
+        <tr>
+            <td><code>removeLast()</code></td>
+            <td>Xóa bỏ phần tử cuối</td>
+        </tr>
+        <tr>
+            <td><code>removeRange()</code></td>
+            <td>Xóa bỏ phần tử từ vị trí start đến vị trí end <code>removeRange(start, end)</code></td>
+        </tr>
+
+    </table>
+    <a id="<?=$index_article[3][0]?>" name="<?=$index_article[3][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Cấu trúc dữ liệu - Map - Ánh xạ</h2>
+    <p>Đây là kiểu tập hợp dữ liệu mà mỗi phần tử biểu diễn theo cặp <code>key:value</code></p>
+    <p>Các phần tử của Map được truy cập bằng ký hiệu <code>[]</code> chứa <code>key</code> dạng <code>map[key]</code></p>
+
+    <p>Khởi tạo Map có thể dùng toàn tử <code>new</code> hoặc khởi tạo luôn một số phần tử bằng <code>{}</code></p>
+    <pre class="prettyprint lang-js">
+  //Tạo một map, khới tạo luôn 3 key - nam, age, score
+  var student = {
+    'name':'Abc',
+    'age': 22,
+    'score': 'A'
+  };
+  student['Subject'] = 'Abc';  //Thêm một phần tử
+  print(student['name']);      //Truy cập phần tử
+</pre>
+    <p>Cũng hoàn tạo tạo ra Map từ toán tử <code>new</code></p>
+    <pre class="prettyprint lang-js">
+  var student = new Map();
+  student['age']    = 22;
+  student['name']   = 'StudentA';
+  student['score']  = 'A';
+
+  //Duyệt qua các phần tử cách 1
+  student.forEach((key, value) {
+    print('$key : có giá trị $value');
+  });
+
+  //Duyệt qua tất cả các phần tử Map (cách 2)
+  for (var key in student.keys) {
+    print('$key :  ${student[key]}');
   }
-  // ...
-}
 </pre>
-<p>Như vậy bất kỳ đâu cũng có thể gọi đến phương thức này mà không cần khởi tạo đối tượng. Chỉ cần tên lớp để gọi
-(cần nhớ là hàm này thuộc về lớp chứ không thuộc về đối tượng triển khai từ lớp)</p>
-<pre class="prettyprint lang-js">
-Product.showListStore();
-</pre>
-<a id="<?=$index_article[3][0]?>" name="<?=$index_article[3][0]?>"></a>
-<h2 class="text-primary display-4 font25">Hàm Setter/Getter</h2>
-<p>Ta có thể xây dựng hàm đặc biệt gọi mà có thể truy cập nó giống phương thức thì nó thi hành (Setter gọi khi thực hiện gán,
-Getter gọi khi truy cập). Sử dụng từ khóa <code>get</code> trước một hàm không có tham số thì hàm đó trở thành <code>Getter</code>,
-sử dụng từ khóa <code>get</code> trước hàm 1 tham số thì đó là hàm <code>Getter</code></p>
-<p>Ví dụ có thêm vào lớp Product hàm Getter và Setter đều có tên là <code>nameProduct</code></p>
-<pre class="prettyprint lang-js">
-class Product {
-  // ...
+    <p><strong>Các phương thức / thuộc tính hay dùng trên Map</strong></p>
+    <p>Ngoài các phương thức - thuộc tính giống như <code>Iterable</code> xem ở trên chú ý thêm:</p>
+    <table class="table table-sm">
 
-  //getter
-  get nameProduct {
-    return this.name;
-  }
+        <tr>
+            <td><code>addAll</code></td>
+            <td>Thêm các phần tử từ một map khác <code>addAll(othemap)</code></td>
+        </tr>
 
-  //Hàm setter
-  set nameProduct(name) {
-    this.name = name;
-    switch (this.name) {
-      case 'Iphone 6':
-        this.manufacture = "Apple";
-      break;
+        <tr>
+            <td><code>clear</code></td>
+            <td>Làm rỗng Map <code>clear();</code></td>
+        </tr>
+        <tr>
+            <td><code>containsKey</code></td>
+            <td><code>containsKey(key)</code> kiểm tra phần tử với key tồn tại</td>
+        </tr>
+        <tr>
+            <td><code>remove()</code></td>
+            <td><code>remove(key)</code> xóa phần tử khỏi map</td>
+        </tr>
 
-      case 'Galaxy S6':
-        this.manufacture = 'Samsung';
-      break;
 
-      default: this.manufacture = '';
-
-    }
-  }
-  // ...
-}
-</pre>
-<p>Sau khi có Getter/Setter thì truy cập giống như thuộc tính</p>
-<pre class="prettyprint lang-js">
-product.nameProduct = "Galaxy S6";      //Gọi đến hàm Setter - nameProduct
-var info = product.nameProduct;         //Gọi đến Getter
-</pre>
+    </table>
 
     <a id="<?=$index_article[4][0]?>" name="<?=$index_article[4][0]?>"></a>
-    <h2 class="text-danger display-4 font30">Tính kế thừa trong lớp</h2>
-<p>Từ một lớp đã có, bạn có thể tạo ra một định nghĩa lớp mới, lớp mới đó gọi là lớp kế thừa - lớp con có luôn các thuộc
-tính, phương thức từ lớp mà nó kế thừa (gọi là lớp cha).</p>
-<p>Để xây dựng một lớp mới kế thừa lớp đã có dùng tới từ khóa <code>extends</code>, ví dụ từ lớp <code>Product</code>
-xây dựng thêm lớp <code>Table</code> có thêm thuộc tính mô tả chiều dài, chiều rộng của sản phẩm.</p>
-<pre class="prettyprint lang-js">
-class Table extends Product {
-  double length = 0;
-  double width   = 0;
-  Table(var giatien) : super(giatien, quantity:1) {
-    //Mã khởi tạo tại lớp con, sau khi hàm tạo lớp cha chạy xong
-    this.name = "Bàn Ăn";
-  }
-}
-</pre>
+    <h2 class="text-danger display-4 font30">Tập hợp - Set</h2>
+    <p>Tập hợp như tên gọi là là tập hợp các phần tử, đảm bảo sao cho mỗi phần tử chỉ được xuất hiện 1 lần.</p>
+    <p>Khởi tạo một tập hợp bằng toán tử <code>new</code> với cú pháp</p>
+    <pre pre class="prettyprint">var s = Set();</pre>
+    <p>Nó có các phương thức và cách duyệt qua phần tử giống phần trình bày <code>Iterable</code> ở trên.</p>
+    <p>Để thêm một phần tử vào tập hợp dùng hàm <code>add(ele);</code> để loại bỏ phần tử dùng hàm <code>remove(ele);</code>,
+        kiểm tra xem có chứa phần tử bằng hàm <code>contains(ele);</code></p>
+
     <a id="<?=$index_article[5][0]?>" name="<?=$index_article[5][0]?>"></a>
-    <h2 class="text-primary display-4 font25">Khởi tạo tại lớp con và sự truy cập đến lớp cha</h2>
-<p>Lớp con nói chung sẽ có những thuộc tính và phương thức kế thừa từ lớp cha, nên từ lớp con bằng từ khóa <code>this</code>
-có thể truy cập đến những thành phần này. Tuy nhiên có những phương thức mà lớp con sẽ định nghĩa lại mà vẫn giữ tên cũ
-    (quá tải) lúc này <code>this</code> sẽ sử dụng phương thức định nghĩa lại, tuy nhiên phiên bản ở lớp cha vẫn còn đó,
-lúc này nếu muốn truy cập đến phiên bản định nghĩa bởi lớp cha sẽ dùng ký hiệu <code>super</code> thay cho <code>this</code>
-(xem thêm phần quá tải hàm ở dưới).</p>
-<p>Hàm khởi tạo ở lớp con, nói chung bắt buộc cũng phải gọi một hàm khởi tạo nào đó của lớp cha. Để làm được điều đó
-sau hàm khởi tạo của lớp con chỉ rõ hàm tạo nào cả lớp cha sẽ gọi sau dấu <code>:</code></p>
-<p>Ở ví dụ trên chính là đoạn <code>supper(giatien, quantity:1)</code> tương đương với hàm khởi tạo
-    <code>Product(giatien, quantity:1)</code></p>
-<p>Trở lại lớp <code>Table</code> trên, khi tạo đối tượng từ lớp</p>
-<pre class="prettyprint lang-js">
-var table = new Table(500);
-</pre>
-<p>Hàm tạo thi hành nó đã gọi đến hàm tạo của lớp cha Product rồi đến các code của chính hàm tạo Table</p>
-
-    <a id="<?=$index_article[6][0]?>" name="<?=$index_article[6][0]?>"></a>
-    <h2 class="text-primary display-4 font25">Nạp chồng phương thức / toán tử</h2>
-<p>Bạn có thể tạo ra phiên bản mới của một phương thức đã có trên lớp cha, và từ đây đối tượng sẽ sử dụng phương thức
-mới được định nghĩa, để làm điều đó ở lớp con tạo lại phương thức với chỉ thị <code>@override</code> - nạp chồng phương thức</p>
-<p>Ví dụ, ta sẽ nạp chồng phương thức <code>showTotal()</code></p>
-<pre class="prettyprint lang-js">
-class Table extends Product {
-  // ...
-  @override
-  showTotal() {
-      print('Sản phẩm:' + this.name);
-      //gọi đến phương thức ở lớp cha
-      super.showTotal();
-
-    }
- // ...
-}
-</pre>
-<p>Ở phiên bản ở lớp con, do có nhu cầu sử dụng lại phương thức của lớp cha nên nó có gọi đến phương thức cũ
-bằng <code>super.showTotal()</code></p>
-<p>Như vậy các đối tượng triển khai từ lớp <code>Table</code> đã có một phiên bản riêng của phương thức <code>showTable</code>,
-mặc định nó sẽ gọi đến phương thức mới này (Kể các các phương thức lớp cha cũng sẽ tự động gọi đến phương thức mới định
-nghĩa này).</p>
-<pre class="prettyprint lang-js">
-var table = new Table(600);
-table.showTotal();
-
-//Kết quả chạy
-var table = new Table(600);
-table.showTotal();
-</pre>
-<p>Đối với các toán tử như +, -, *, [] ... cũng có thể nạp chồng như trên.</p>
-<p>Ví dụ định nghĩa toán tử <code>+</code></p>
-<pre class="prettyprint lang-js">
-Product operator + (Product p) => new Product(this.quantity + p.quantity);
-</pre>
-    <a id="<?=$index_article[7][0]?>" name="<?=$index_article[7][0]?>"></a>
-    <h2 class="text-primary display-4 font25">Lớp trừu tượng</h2>
-<p>Lớp trừu tượng là lớp không dùng trực tiếp để tạo ra đối tượng được, nó chỉ được kế thừa từ lớp khác.
-Phương thức nào trong lớp trừu tượng chỉ khai báo tên hàm, thì phương thức đó gọi là phương thức trừu tượng,
-lớp kế thừa bắt buộc phải định nghĩa nội dung hàm này. Sau đây là tạo ra lớp tượng <code>A</code> với từ khóa <code>abstract</code></p>
-<pre class="prettyprint lang-js">
-abstract class A {
-  //Khai báo các thuộc tính
-  var name = 'My Abstract Class';
-  //Khai báo các phương thức nếu cần
-
-  //Khai báo phương thức trừu tượng (chỉ có tên)
-  void displayInfomation();
-}</pre>
-    <p>Lớp này không thể dùng để tạo ra đối tượng, nhưng nó được kế thừa bởi lớp khác. Lớp con kế thừa bắt buộc
-    phải định nghĩa nội dung cho phương thức trừu tượng bằng cách nạp chồng (<code>@override</code>).
-        Ví dụ khai báo lớp <code>B</code> kế thừa lớp trừu tượng <code>A</code></p>
-<pre class="prettyprint lang-js">
-class B extends A {
-  @override
-  void displayInfomation() {
-     print(this.name);
-  }
-}</pre>
+    <h2 class="text-danger display-4 font30">Một số cấu trúc dữ liệu phức tạp</h2>
+    <p>Từ các cấu trúc dữ liệu trên, <code>Dart</code> xây dựng thêm các loại cấu trúc
+        phức chứa trong thư viện <code>dart:collection</code></p>
+    <p>Một số loại như: <code>HashMap</code>, <code>HashSet</code>, <code>LinkedList</code> ...</p>
+    <p>Trước khi sử dụng các cấu trúc dữ liệu này cần nạp thư viện bằng lệnh sau ở đầu file</p>
     <pre class="prettyprint lang-js">
-//Áp dụng
-var i = new B();
-i.displayInfomation();
-
-//Kết quả chạy
-My Abstract Class
+import 'dart:collection';
 </pre>
+    <a id="<?=$index_article[6][0]?>" name="<?=$index_article[6][0]?>"></a>
+    <h2 class="text-primary display-4 font25">Hàng đợi - Queue</h2>
+    <p>Với hàng đợi Queue thì chỉ tương tác với cấu trúc này ở đầu hàng đợi và cuối hàng đợi (thêm / bớt).</p>
+    <table class="table table-sm">
+
+        <tr>
+            <td><code>add</code>, <code>addLast</code></td>
+            <td>Thêm phần tử vào cuối hàng <code>add(ele);</code> hoặc <code>addLast(ele)</code></td>
+        </tr>
+        <tr>
+            <td><code>addFirst</code></td>
+            <td>Thêm phần tử vào đầu hàng <code>addFirst(ele);</code></td>
+        </tr>
+        <tr>
+            <td><code>removeFirst()</code></td>
+            <td>Xóa phần tử đầu tiên</td>
+        </tr>
+        <tr>
+            <td><code>removeLast()</code></td>
+            <td>Xóa phần tử cuối cùng</td>
+        </tr>
+        <tr>
+            <td><code>remove()</code></td>
+            <td>Xóa 1 phần tử <code>remove(ele)</code></td>
+        </tr>
+
+    </table>
+    <pre class="prettyprint lang-js">
+var q = new Queue();
+q.add('A');
+q.add('B');
+q.addFirst('A0');
+q.addLast('B0');
+print(q);
+q.removeFirst();
+q.removeLast();
+q.remove('B');</pre>
+    <p>Xem thêm <code>Iterable</code> để xem cách duyệt qua một cách tương tự.</p>
+    <a id="<?=$index_article[7][0]?>" name="<?=$index_article[7][0]?>"></a>
+    <h2 class="text-primary display-4 font25">HashMap</h2>
+    <p>Sử dụng và ý nghĩa giống <code>Map</code> (khởi tạo <code>new HashMap()</code>), có có điều các đối tượng làm key phải cung cấp
+        sự so sánh <code>==</code> thông qua giá trị <code>.hashCode</code></p>
+    <p class="alert alert-danger"><strong>HashMap</strong> sử dụng mã hash của đối tượng key để so sánh, tìm kiếm phần tử
+        nên HashMap nhanh hơn khi dữ liệu key lớn</p>
+
+    <a id="<?=$index_article[7][0]?>" name="<?=$index_article[7][0]?>"></a>
+    <h2 class="text-primary display-4 font25">HashSet</h2>
+    <p>Sử dụng và ý nghĩa giống <code>Set</code> (khởi tạo <code>new HashSet()</code>), so sánh <code>==</code> thông qua giá trị <code>.hashCode</code></p>
     <a id="<?=$index_article[8][0]?>" name="<?=$index_article[8][0]?>"></a>
-    <h2 class="text-primary display-4 font25">Tìm hiểu về interface</h2>
-<p>Interface - giao diện - là khái niệm quen thuộc trong các ngôn ngữ lập trình hướng tối tượng, với Dart mặc định
-mọi lớp đều là interface lớp lớp đó được triển khai bởi lớp khác bằng từ khóa <code>implements</code></p>
-<p>Khi một lớp được coi là giao diện thì lớp triển khai nó phải định nghĩa lại mọi phương thức, thuộc tính có trong giao
-diện</p>
-<p>Ví dụ xây dựng lớp <code>C</code> triển khai từ lớp <code>B</code> bằng <code>implements</code> vậy <code>B</code>
-sẽ là <code>interface</code> và trong <code>C</code> bắt buộc phải định nghĩa lại mọi thứ trong <code>B</code></p>
-<pre class="prettyprint lang-js">
-class C implements B {
-  @override
-  String name;
-
-  @override
-  void displayInfomation() {
-      // ...
-  }
-}
-</pre>
-<p>Mục đích sử dụng giao diện là để đảm báo các lớp có cùng giao diện sẽ có các <code>API</code> giống nhau.</p>
-
-    <a id="<?=$index_article[9][0]?>" name="<?=$index_article[9][0]?>"></a>
-    <h2 class="text-primary display-4 font25">Sử dụng Mixin</h2>
-    <p>Với Dart thì Mixin là một lớp, nó không được sử dụng trực tiếp để tạo ra đối tượng, một Mixin chứa các
-    phương thức, thuộc tính dùng để gộp vào một lớp khác. </p>
-    <p>Ví dụ ta có một Mixin tên là <code>M</code> thì khi khai báo lớp <code>C</code> ở trên muốn gộp những gì có
-    ở <code>M</code> vào dùng từ khóa <code>with</code> (mang ý nghĩa gộp code chứ không mang ý nghĩa kế thừa) với cú pháp như sau</p>
-<pre class="prettyprint lang-js">
-mixin M {
-  var var1 = null;
-  showSomething()
-  {
-    print('Print message ...');
-  }
-}
-
-class C extends B with M {
-  @override
-  String name;
-
-  @override
-  void displayInfomation() {
-   }
-}
-</pre>
-
-
-    <a id="<?=$index_article[10][0]?>" name="<?=$index_article[10][0]?>"></a>
-    <h2 class="text-danger display-4 font30">Một số lưu ý bổ sung về Class</h2>
-    <a id="<?=$index_article[11][0]?>" name="<?=$index_article[11][0]?>"></a>
-    <h3 class="text-primary display-4 font25">Lớp Object</h3>
-<p>Đây là lớp cơ sở của <code>Dart</code>, mặc định mọi lớp, mọi hàm ... kể cả lớp, hàm do bạn định nghĩa đều mở rộng từ lớp này.
-Như vậy mọi lớp đều có một số phương thức, thuộc tính chung là:</p>
-<ul>
-    <li><code>hashCode</code> thuộc tính chứa mã hash của đối tượng</li>
-    <li><code>toString()</code> trả về chuỗi mô tả đối tượng</li>
-    <li><code>==</code> toán tử so sánh theo hashCode của hai đối tượng</li>
-</ul>
-    <a id="<?=$index_article[12][0]?>" name="<?=$index_article[12][0]?>"></a>
-    <h3 class="text-primary display-4 font25">Toán tử cascade ..</h3>
-<p>Khi bạn có một chuỗi tác vụ trên đối tượng (gọi phương thức, thiết lập thuộc tính) thay vì phải viết đầy đủ đối tượng
-thì bạn chỉ cần viết nó một lần, các tương tác tiếp theo thay thế bằng <code>..</code></p>
-<pre class="prettyprint lang-js">
-  var table = new Table(1);
-  table
-  ..calulateTotal()     //Thay cho table.calulateTotal();
-  ..length=100          //Thay cho table.length=100;
-  ..name='Abc'
-  ..quantity=100
-  ..showTotal();
-</pre>
-
-
-
-    <p>Nếu bạn lớp của bạn sinh ra các đối tượng không thay đổi, hãy thêm từ khóa <code>const</code> vào trước hàm tạo.</p>
+    <h2 class="text-primary display-4 font25">LinkedList</h2>
+    <p>Sử dụng và ý nghĩa giống <code>List</code> (khởi tạo <code>new LinkedList()</code>),
+        chỉ có điều nó lưu trữ dữ liệu theo cách tối ưu để duyệt qua, tìm kiếm nhanh, tốt để tương quản lý dữ liệu, như chèn và xóa một lượng lớn phần tử</p>
 
 <?
 echo\XT\Core\Common\Common::createBottomIndex($index_article);
