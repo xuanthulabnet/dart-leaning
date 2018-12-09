@@ -56,7 +56,7 @@ main() {
   String k1 = 'Abc';
   print(k1.hashCode);
   m[k1] = 'K1K1K1';  
-  String k2 = 'Abc';
+  String k2 = 'Abc dzfdas AAAAAAAAfd fadsfAAAAAAAf đsfad AAAAAAdfds';
   m[k2] = 'K2K2K2';
   print(k2.hashCode);
 
