@@ -23,12 +23,8 @@ fncGeneric<T>(T thamso) {
 main() {
   var a = new MyClass<int, String>();
   a.setThuoctinh(11, 'Lop Generic');
-  a.show();
-
+  a.show(); 
   fncGeneric<int>(111);
 
 }
 
-class MyClassX<E, T> {
-
-}

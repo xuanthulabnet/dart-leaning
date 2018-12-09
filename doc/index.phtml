@@ -10,10 +10,9 @@ $nav = $index_article->renderlist();
 \XT\Core\Common\Common::eventValue(\XT\Core\System\KeyView::startNav(),$nav);
 
 $index_article = [
-    ['import' , '<strong>Nạp thư viện - import</strong>'],
-    ['libsdk' , '<strong>Các thư viện cung cấp sẵn</strong>'],
-    ['createlib' , '<strong>Tạo thư viện</strong>'],
-    ['pub' , '<strong>Cài đặt các gói package</strong>'],
+    ['generic' , '<strong>Hàm và lớp Generic</strong>'],
+    ['genericlib' , '<strong>Thư viện Generic Dart</strong>'],
+
 
 
 
@@ -22,177 +21,84 @@ $index_article = [
 ?>
 
     <a id="<?=$index_article[0][0]?>" name="<?=$index_article[0][0]?>"></a>
-    <h2 class="text-danger display-4 font30">Nạp thư viện trong Dart</h2>
-   <p>Một thư viện có thể chứa tập hợp các lớp, hàm, hằng ... để bạn nạp vào và sử dụng khi cần thiết.</p>
-<p>Trong Dart để nạp thư viện bạn dùng từ khóa <code>import</code> ở đầu file. Với cú pháp:</p>
+    <h2 class="text-danger display-4 font30">Hàm và lớp Generic</h2>
+    <p>Bạn có thể xây dựng các lớp, các hàm mà khi khai báo thì nó không làm việc trên một kiểu
+        dữ liệu cụ thể nào cả, mà kiểu dữ liệu nó làm việc là chung chung, ký hiệu là kiểu dữ liệu <code>A</code>,
+        kiểu dữ liệu <code>B</code>, kiểu dữ liệu <code>E</code>, <code>T</code> ...</p>
+    <p>Chỉ đến khi triển khai lớp thành đối tượng mới chỉ định <code>A</code> là kiểu cụ thể gì, <code>B</code>
+        là kiểu gì ... Các hàm, lớp xây dựng theo cách đó gọi là là hàm, lớp Generic</p>
+<p>Để khai báo lớp làm việc trên kiểu dữ liệu chung gì thì khai báo ký hiệu đại diện kiểu dữ liệu trong
+    <code>&lt;...&gt;</code> sau tên lớp, ví dụ lớp <code>MyClass</code> sẽ làm việc trên kiểu E và T</p>
 <pre class="prettyprint lang-js">
-import 'uri';
+class MyClassX&lt;E, T&gt; {
+
+}
 </pre>
-<p>Nếu chỉ nạp một phần nào đó của thư viện sử dụng thêm từ khóa <code>show</code> có dạng</p>
+<p>Tương tự như hàm, hàm sau nhận tham số kiểu <code>T</code></p>
 <pre class="prettyprint lang-js">
-import 'uri' show part1, part2, part3;
+fncGeneric&lt;T&gt;(T thamso) {
+  print(thamso);
+}
 </pre>
-<p>Khi nạp thư viện, để tránh xung đột về tên, bạn cũng có thể đặt lại bằng <code>as</code></p>
-<p>Trong đó <code>uri</code> như là một định danh duy nhất trỏ đến thư viên cần nạp. Nó có thể có các dạng:</p>
-<ul>
-    <li>Các thư viện xây dựng sẵn của Dart có cấu trúc uri
-        <code>dart:tên_thư_viện</code> ví dụ <code>dart:convert</code>,
-        <code>dart:html</code>, <code>dart:math</code>, <code>dart:js</code>, <code>dart:web_sql</code>.
-    Ví dụ cần nạp thư viện toán học <code>dart:math</code> thì dùng
+<p><code>T</code>, <code>E</code> cụ thể là kiểu gì thì chỉ định khi tạo đối tượng từ lớp Generic</p>
 <pre class="prettyprint lang-js">
-import 'dart:math';
+var a = new MyClass&lt;int, String&gt;();
+
+//Ký hiệu E sẽ là kiểu int
+//Kỹ hiệu T sẽ là kiểu String
+
+
+var b = new MyClass&lt;double, int&gt;();
+//Ký hiệu E sẽ là kiểu double
+//Kỹ hiệu T sẽ là kiểu int
 </pre>
-    </li>
-    <li>Nạp từ file dự án, thì <code>url</code> chỉ đến đường dẫn file dart cần nạp vào. Ví dụ bạn có file
-    <code>lib/mylib.dart</code> trong dự án thì nạp vào dùng bằng:
+<p>Ví dụ</p>
 <pre class="prettyprint lang-js">
-import 'lib/mylib.dart';
+class MyClass&lt;E,T&gt;
+{
+  E thuoctinh1;
+  T thuoctinh2;
+
+  setThuoctinh(E t1, T t2) {
+    this.thuoctinh1 = t1;
+    this.thuoctinh2 = t2;
+  }
+
+  show() {
+    print(this.thuoctinh1);
+    print(this.thuoctinh2);
+  }
+
+}
+
+fncGeneric&lt;T&gt;(T thamso) {
+  print(thamso);
+}
+
+
+main() {
+  var a = new MyClass&lt;int, String&gt;();
+  a.setThuoctinh(11, 'Lop Generic');
+  a.show();
+  fncGeneric&lt;int&gt;(111);
+
+}
 </pre>
-    </li>
-    <li>Thư viện nạp từ các gói <code>package</code> tải về, thì uri có dạng <code>package:tên_gói/thư_viện_gói</code>.
-    Ví dụ gói <a href="https://pub.dartlang.org/packages/googleapis_auth" target="_blank">googleapis_auth</a>, có thành
-    phần <code>auth_browser</code> cung cấp chức năng xác thực Auth với tài khoản google, thì nạp thư viện đó vào bằng
-<pre class="prettyprint lang-js">
-import "package:googleapis_auth/auth_browser.dart";
-</pre>
-        <p>Phần sau sẽ nói cách tải về các gói package</p>
-    </li>
-</ul>
     <a id="<?=$index_article[1][0]?>" name="<?=$index_article[1][0]?>"></a>
-    <h2 class="text-danger display-4 font30">Các thư viện cung cấp sẵn</h2>
-<p>Những thư viện <code>Dart</code> đi cùng <code>SDK Dart</code>, bạn có thể nạp luôn bằng <code>import 'dart:tên_thư_viên'</code>,
-danh sách thư viện như: (chi tiết tại <a href="https://api.dartlang.org/stable/2.1.0/index.html" target="_blank">LIBRARIES</a>)</p>
-<table class="table-sm">
-    <tr>
-        <th>Thư viện</th>
-        <th>Chức năng</th>
-    </tr>
-    <tr>
-        <td><code>dart:core</code></td>
-        <td>Thư viện cung cấp các hàm, lớp cơ bản, nó tự động nạp nên bạn không cần import thư viện này</td>
-    </tr>
-    <tr>
-        <td style="white-space: nowrap"><code>dart:collection</code></td>
-        <td>Cung cấp các cấu trúc dư liệu như HashSet, HashMap, Queue ...</td>
-    </tr>
-
-    <tr>
-        <td><code>dart:math</code></td>
-        <td>Cung cấp hàm toán học</td>
-    </tr>
-    <tr>
-        <td><code>dart:convert</code></td>
-        <td>Tính năng mã hóa, giải mã dữ liệu, kể cả JSON, UTF-8</td>
-    </tr>
-    <tr>
-        <td><code>dart:io</code></td>
-        <td>Thư viện IO cung cấp các chức năng về File, Socket, HTTP</td>
-    </tr>
-    <tr>
-    <tr>
-        <td><code></code></td>
-        <td>Một số thư viện dánh cho WEB như <code>dart:js</code>, <code>dart:html</code> ...</td>
-    </tr>
-    </tr>
-</table>
-
-    <a id="<?=$index_article[2][0]?>" name="<?=$index_article[2][0]?>"></a>
-    <h2 class="text-danger display-4 font30">Tạo thư viện trong Dart</h2>
-<p>Giả sự dự án của bạn muốn tạo ra một thư viện có tên <code>myfirstlib</code>, thì bạn tạo ra file <code>myfirstlib.dart</code>
-có đường dẫn nằm trong dự án, ví dụ <code>lib/myfirstlib.dart</code></p>
-<p>Sau đó bạn code các hàm, lớp ... trong file này, ở đầu file này có đặt dòng khai báo là thư viện:</p>
-<pre class="prettyprint lang-js">
-library myfirstlib;
-</pre>
-<p>Sau đó khi nào cần sử dụng thư viện này chỉ việc gọi:</p>
-<pre class="prettyprint lang-js">
-import 'lib/myfirstlib.dart';
-</pre>
-<p>Sau khi import là có thể dùng đến các thành phần lớp, hàm, hằng ... định nghĩa trong thư viện.</p>
-<p>Cũng lưu ý, nếu thành phần nà (hàm, lớp ...) có tên bắt đầu bằng <code>_</code> thì nó là của riêng thư viện,
-không thể import dùng được</p>
-<p>Ví dụ nội dung <code>myfirstlib.dart</code></p>
-<pre class="prettyprint lang-js">
-library myfirstlib;
-
-class A {
-  show() {
-    print(this);
-  }
-}
-
-class _B {
-  show() {
-    print(this);
-  }
-}
-
-void _abc() {
-
-}
-
-void xyz() {
-  _B().show();
-}
-</pre>
-<p>Thì lớp <code>_B</code> không thể import được, hàm <code>_abc</code> không thể import được.</p>
-<p>Hoặc chỉ nạp hàm <code>xyz</code> thì gọi</p>
-<pre class="prettyprint lang-js">
-import 'lib/myfirstlib.dart' show xyz;
-</pre>
-    <a id="<?=$index_article[3][0]?>" name="<?=$index_article[3][0]?>"></a>
-    <h2 class="text-danger display-4 font30">Cài đặt các gói</h2>
-<p>Dart cũng có trình quản lý gói package riêng là <code>pub</code> (nó giống NPM của NodeJS, giống Nuget của .Net,
-    Gradle của Java ...)</p>
-<p>Tìm các Package ở đâu, các gói được chia sẻ và cung cấp lưu tại <a href="https://pub.dartlang.org/" target="_blank">DART PUB</a>,
-    bạn chỉ việc tìm kiếm ở đó, gói thư viện nào phù hợp thì tích hợp vào dự án!
+    <h2 class="text-danger display-4 font30">Thư viện Generic</h2>
+<p>Trong Dart có nhiều cấu trúc dữ liệu xây dựng sẵn bằng kỹ thuật Generic
+    (xem <a href="/tim-hieu-cac-cau-truc-du-lieu-trong-dart.html" target="_blank">Cấu trúc dữ liệu Dart</a>),
 </p>
-<p>Để tích hợp được các gói vào dự án, thì ở thư mục gốc của dự án bạn phải có file <code>pubspec.yaml</code>,
-nếu chưa có hãy tạo ra nó.</p>
-<p>Sau đó liệt kê các gói cần tích hợp ở mục <code>dependencies</code>, liệt kê đúng cấu trúc <code>yaml</code>,
-mộc package chỉ ra tên <code>tên_packe</code>: <code>version_nhỏ_nhất</code></p>
-<pre class="prettyprint lang-js">
-name: Tên Dự Án Của Tôi
-description: Mô tả cho dự án
+<p>Bạn có thể sử dụng để khởi tạo đó là: <br>
+    <code>DoubleLinkedQueue&lt;E&gt;</code><br>
+    <code>HashMap&lt;K,V&gt;</code><br>
+    <code>HashSet&lt;E&gt;</code><br>
+    <code>LinkedHashMap&lt;K,V&gt;</code><br>
+    <code>LinkedHashSet&lt;E&gt;</code><br>
+    <code>LinkedList&lt;E extends LinkedListEntry&lt;E&gt;&gt;</code><br>
+    <code>Queue&lt;E&gt;</code>
 
-dependencies:
-    package1: '^version_pack1'
-    package2: '^version_pack2'
-    package3: '^version_pack3'
-</pre>
-<p>Ví dụ muốn dùng package <a href="https://pub.dartlang.org/packages/dialog" target="_blank">dialog</a>, thì file <code>pubspec.yaml</code></p>
-<pre class="prettyprint lang-js">
-name: Ten_du_an_cua_toi
-description: Mô tả cho dự án
-
-dependencies:
-    dialog: '^0.7.0'
-</pre>
-<p>Dùng thêm package <a href="https://pub.dartlang.org/packages/google_maps" target="_blank">google_maps</a> thì thêm vào:</p>
-<pre class="prettyprint lang-js">
-name: Ten_du_an_cua_toi
-description: Mô tả cho dự án
-
-dependencies:
-    dialog: '^0.7.0'
-    google_maps: '^3.3.2'
-</pre>
-<p>Chú ý name là tên dự án của bạn, đặt theo quy tắc đặt tên biến</p>
-<p>Khi có file <code>pubspec.yaml</code> từ <code>terminate</code> chỉ việc chạy các lệnh <code>pub</code>
-để cài đặt, cập nhật ...</p>
-<p><strong>Cài đặt các package gõ lệnh <code>pub get</code></strong></p>
-<pre class="bg-dark text-light p-2">
-<span class="text-secondary">#</span> pub get
-<span class="text-secondary">
-Resolving dependencies...
-+ dialog 0.7.0
-+ google_maps 3.3.2
-+ js_wrapping 0.5.0
-+ meta 1.1.6
-</span>
-</pre>
-<p>Tương tự, để cập nhật phiên bản các package gõ lệnh <code>pub update</code></p>
-<p>Sau khi cài được các package thì chỉ việc dùng <code>import</code> để nạp package, và sử dụng</p>
+</p>
 
 <?
 echo\XT\Core\Common\Common::createBottomIndex($index_article);
