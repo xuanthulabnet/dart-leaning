@@ -1,0 +1,105 @@
+<?
+/**
+ * @var $this PhpRenderer
+ */
+$index_article =\XT\Core\Common\Common::sendevent('dynamic_load_phtml',
+    ['file'=>'module/Application/view/dynamiccontent/dart.php', 'view'=>$this])->last();
+
+$nav = $index_article->renderlist();
+
+\XT\Core\Common\Common::eventValue(\XT\Core\System\KeyView::startNav(),$nav);
+
+$index_article = [
+    ['generic' , '<strong>Hàm và lớp Generic</strong>'],
+    ['genericlib' , '<strong>Thư viện Generic Dart</strong>'],
+
+
+
+
+];
+
+?>
+
+    <a id="<?=$index_article[0][0]?>" name="<?=$index_article[0][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Hàm và lớp Generic</h2>
+    <p>Bạn có thể xây dựng các lớp, các hàm mà khi khai báo thì nó không làm việc trên một kiểu
+        dữ liệu cụ thể nào cả, mà kiểu dữ liệu nó làm việc là chung chung, ký hiệu là kiểu dữ liệu <code>A</code>,
+        kiểu dữ liệu <code>B</code>, kiểu dữ liệu <code>E</code>, <code>T</code> ...</p>
+    <p>Chỉ đến khi triển khai lớp thành đối tượng mới chỉ định <code>A</code> là kiểu cụ thể gì, <code>B</code>
+        là kiểu gì ... Các hàm, lớp xây dựng theo cách đó gọi là là hàm, lớp Generic</p>
+<p>Để khai báo lớp làm việc trên kiểu dữ liệu chung gì thì khai báo ký hiệu đại diện kiểu dữ liệu trong
+    <code>&lt;...&gt;</code> sau tên lớp, ví dụ lớp <code>MyClass</code> sẽ làm việc trên kiểu E và T</p>
+<pre class="prettyprint lang-js">
+class MyClassX&lt;E, T&gt; {
+
+}
+</pre>
+<p>Tương tự như hàm, hàm sau nhận tham số kiểu <code>T</code></p>
+<pre class="prettyprint lang-js">
+fncGeneric&lt;T&gt;(T thamso) {
+  print(thamso);
+}
+</pre>
+<p><code>T</code>, <code>E</code> cụ thể là kiểu gì thì chỉ định khi tạo đối tượng từ lớp Generic</p>
+<pre class="prettyprint lang-js">
+var a = new MyClass&lt;int, String&gt;();
+
+//Ký hiệu E sẽ là kiểu int
+//Kỹ hiệu T sẽ là kiểu String
+
+
+var b = new MyClass&lt;double, int&gt;();
+//Ký hiệu E sẽ là kiểu double
+//Kỹ hiệu T sẽ là kiểu int
+</pre>
+<p>Ví dụ</p>
+<pre class="prettyprint lang-js">
+class MyClass&lt;E,T&gt;
+{
+  E thuoctinh1;
+  T thuoctinh2;
+
+  setThuoctinh(E t1, T t2) {
+    this.thuoctinh1 = t1;
+    this.thuoctinh2 = t2;
+  }
+
+  show() {
+    print(this.thuoctinh1);
+    print(this.thuoctinh2);
+  }
+
+}
+
+fncGeneric&lt;T&gt;(T thamso) {
+  print(thamso);
+}
+
+
+main() {
+  var a = new MyClass&lt;int, String&gt;();
+  a.setThuoctinh(11, 'Lop Generic');
+  a.show();
+  fncGeneric&lt;int&gt;(111);
+
+}
+</pre>
+    <a id="<?=$index_article[1][0]?>" name="<?=$index_article[1][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Thư viện Generic</h2>
+<p>Trong Dart có nhiều cấu trúc dữ liệu xây dựng sẵn bằng kỹ thuật Generic
+    (xem <a href="/tim-hieu-cac-cau-truc-du-lieu-trong-dart.html" target="_blank">Cấu trúc dữ liệu Dart</a>),
+</p>
+<p>Bạn có thể sử dụng để khởi tạo đó là: <br>
+    <code>DoubleLinkedQueue&lt;E&gt;</code><br>
+    <code>HashMap&lt;K,V&gt;</code><br>
+    <code>HashSet&lt;E&gt;</code><br>
+    <code>LinkedHashMap&lt;K,V&gt;</code><br>
+    <code>LinkedHashSet&lt;E&gt;</code><br>
+    <code>LinkedList&lt;E extends LinkedListEntry&lt;E&gt;&gt;</code><br>
+    <code>Queue&lt;E&gt;</code>
+
+</p>
+
+<?
+echo\XT\Core\Common\Common::createBottomIndex($index_article);
+?>
