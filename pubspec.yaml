@@ -1,0 +1,6 @@
+name: Ten_du_an_cua_toi
+description: 'Mô tả cho dự án'
+
+dependencies:
+    dialog: '^0.7.0'
+    google_maps: '^3.3.2'
