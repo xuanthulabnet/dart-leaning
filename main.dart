@@ -1,30 +1,27 @@
-class MyClass<E,T>
-{
-  E thuoctinh1;
-  T thuoctinh2;
+const info = '#4fs358wredsfadsfdfdw'; 
 
-  setThuoctinh(E t1, T t2) {
-    this.thuoctinh1 = t1;
-    this.thuoctinh2 = t2;
-  }
-
-  show() {
-    print(this.thuoctinh1);
-    print(this.thuoctinh2);
-  }
-  
+getInfomation()  {
+  for (int i = 1; i<=1000; i++);
+  return info;
+}
+Future<String> showInfomation() async {
+  var data;
+  data = await getInfomation();
+  print('This is your data -' + DateTime.now().toString());
+  print(data);
+  return 'showInfomation Complete!';
 }
 
-fncGeneric<T>(T thamso) {
-  print(thamso);
+secondFunction() {
+  print('Thời gian - ' + DateTime.now().toString());
 }
-
-
 main() {
-  var a = new MyClass<int, String>();
-  a.setThuoctinh(11, 'Lop Generic');
-  a.show(); 
-  fncGeneric<int>(111);
-
+  Future f = showInfomation();
+  f.then((data) =>(data) { print(data); }).catchError((e) => print('Lỗi xảy ra - '+e.toString()));
+  secondFunction();
 }
+
+Future<int> functionName() async {
+  return 1;
+} 
 
