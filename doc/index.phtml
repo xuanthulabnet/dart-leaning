@@ -10,8 +10,8 @@ $nav = $index_article->renderlist();
 \XT\Core\Common\Common::eventValue(\XT\Core\System\KeyView::startNav(),$nav);
 
 $index_article = [
-    ['generic' , '<strong>Hàm và lớp Generic</strong>'],
-    ['genericlib' , '<strong>Thư viện Generic Dart</strong>'],
+    ['WebApp' , '<strong>Dự án mới</strong>'],
+    ['webdev', '<i>Cài đặt webdev</i>']
 
 
 
@@ -20,85 +20,114 @@ $index_article = [
 
 ?>
 
+<p>Ứng dụng của <code>Dart</code> bao gồm tạo ra các ứng dụng phía Server,
+    các ứng dựng chạy trên nền Web phía Client, các ứng dụng di động
+với Flutter.</p>
+<p>Đối với ứng dụng Web (từ đây hiểu là ứng dụng chạy trên Browser), thực chất là code viết
+    bằng Dart sẽ được chuyển thành JavaScript và thi hành code JS đó (Mặc dù trình duyệt
+    Chrome của Google có thể chạy trực tiếp Dart, nhưng tốt nhất không đi theo hướng này
+    mà chúng ta sẽ luôn biên dịch Dart thành JS).</p>
+<p>Khi tạo ứng dụng Web nếu muốn phát triển dựa trên framework <code>Angular</code> thì sẽ tích hợp thư viện
+    AngularDart, phần này sẽ nói khi đã nắm được cơ bản về Dart Web</p>
+
     <a id="<?=$index_article[0][0]?>" name="<?=$index_article[0][0]?>"></a>
-    <h2 class="text-danger display-4 font30">Hàm và lớp Generic</h2>
-    <p>Bạn có thể xây dựng các lớp, các hàm mà khi khai báo thì nó không làm việc trên một kiểu
-        dữ liệu cụ thể nào cả, mà kiểu dữ liệu nó làm việc là chung chung, ký hiệu là kiểu dữ liệu <code>A</code>,
-        kiểu dữ liệu <code>B</code>, kiểu dữ liệu <code>E</code>, <code>T</code> ...</p>
-    <p>Chỉ đến khi triển khai lớp thành đối tượng mới chỉ định <code>A</code> là kiểu cụ thể gì, <code>B</code>
-        là kiểu gì ... Các hàm, lớp xây dựng theo cách đó gọi là là hàm, lớp Generic</p>
-<p>Để khai báo lớp làm việc trên kiểu dữ liệu chung gì thì khai báo ký hiệu đại diện kiểu dữ liệu trong
-    <code>&lt;...&gt;</code> sau tên lớp, ví dụ lớp <code>MyClass</code> sẽ làm việc trên kiểu E và T</p>
-<pre class="prettyprint lang-js">
-class MyClassX&lt;E, T&gt; {
+    <h2 class="text-danger display-4 font30">Dự án mới, môi trường phát triển ứng dụng Web bằng Dart</h2>
+<p>Bạn vẫn có thể dùng Visual Studio Code với các thiết lập như đã nói ở
+    <a href="/cai-dat-sdk-dart-viet-chuong-trinh-dart-dau-tien.html" target="_blank">Cài đặt SDK Dart</a>,
+để phát triển ứng dụng Web</p>
+<p>Từ VS Code, tạo một dự án (thư mục) mới tên là <code>FirstWebApp</code>,
+tạo thư mục <code>web</code> làm nơi lưu file dart, html của ứng dụng và cũng chính là thư
+mục lưu các thành phần tĩnh khác (hình ảnh, css ...). Trước tiên, trong thư mục này hãy tạo 2 file
+<code>main.dart</code> và <code>index.html</code></p>
+<p>Ở thư mục gốc của dự án tạo file <code>pubspec.yaml</code> có nội dung như sau:</p>
+<pre class="prettyprint lang-js0">
+name: FirstWebApp
+description: Đây là ứng dụng biên dịch từ Dart
 
-}
+dependencies:
+  build_runner: ^1.0.0
+  build_test: ^0.10.2
+  build_web_compilers: ^0.4.0
 </pre>
-<p>Tương tự như hàm, hàm sau nhận tham số kiểu <code>T</code></p>
-<pre class="prettyprint lang-js">
-fncGeneric&lt;T&gt;(T thamso) {
-  print(thamso);
-}
-</pre>
-<p><code>T</code>, <code>E</code> cụ thể là kiểu gì thì chỉ định khi tạo đối tượng từ lớp Generic</p>
-<pre class="prettyprint lang-js">
-var a = new MyClass&lt;int, String&gt;();
-
-//Ký hiệu E sẽ là kiểu int
-//Kỹ hiệu T sẽ là kiểu String
-
-
-var b = new MyClass&lt;double, int&gt;();
-//Ký hiệu E sẽ là kiểu double
-//Kỹ hiệu T sẽ là kiểu int
-</pre>
-<p>Ví dụ</p>
-<pre class="prettyprint lang-js">
-class MyClass&lt;E,T&gt;
-{
-  E thuoctinh1;
-  T thuoctinh2;
-
-  setThuoctinh(E t1, T t2) {
-    this.thuoctinh1 = t1;
-    this.thuoctinh2 = t2;
-  }
-
-  show() {
-    print(this.thuoctinh1);
-    print(this.thuoctinh2);
-  }
-
-}
-
-fncGeneric&lt;T&gt;(T thamso) {
-  print(thamso);
-}
-
-
-main() {
-  var a = new MyClass&lt;int, String&gt;();
-  a.setThuoctinh(11, 'Lop Generic');
-  a.show();
-  fncGeneric&lt;int&gt;(111);
-
-}
-</pre>
+<p>Sau đó từ dòng lệnh <code>terminate</code> (đang ở thư mục dự án) gõ lệnh <code>pub get</code>
+để tải và cài đặt các gói trên vào thư viện Dart.</p>
     <a id="<?=$index_article[1][0]?>" name="<?=$index_article[1][0]?>"></a>
-    <h2 class="text-danger display-4 font30">Thư viện Generic</h2>
-<p>Trong Dart có nhiều cấu trúc dữ liệu xây dựng sẵn bằng kỹ thuật Generic
-    (xem <a href="/tim-hieu-cac-cau-truc-du-lieu-trong-dart.html" target="_blank">Cấu trúc dữ liệu Dart</a>),
-</p>
-<p>Bạn có thể sử dụng để khởi tạo đó là: <br>
-    <code>DoubleLinkedQueue&lt;E&gt;</code><br>
-    <code>HashMap&lt;K,V&gt;</code><br>
-    <code>HashSet&lt;E&gt;</code><br>
-    <code>LinkedHashMap&lt;K,V&gt;</code><br>
-    <code>LinkedHashSet&lt;E&gt;</code><br>
-    <code>LinkedList&lt;E extends LinkedListEntry&lt;E&gt;&gt;</code><br>
-    <code>Queue&lt;E&gt;</code>
+    <h2 class="text-primary display-4 font30">Cài đặt webdev</h2>
+<p><code>webdev</code> là một gói của Dart (quản lý bởi pub), công cụ này cùng với các công cụ
+đã có khi cài SDK như dart2js ... giúp chúng ta các việc: tạo ra một webdev server (từ thư mục web ở trên),
+giám sát sự thay đổi các file trong thư mục web, mỗi khi thay đổi tự động dịch ra code.</p>
+<p>Gõ lệnh sau để cài webdev</p>
+<pre class="bg-dark text-light p-2">
+pub global activate webdev
+</pre>
+<p>Chú ý sau khi hoàn tất có thông báo nơi chứa file webdev, có thể bạn phải thêm thư mục
+dẫn đến file này vào biến môi trường <code>PATH</code> của hệ điều hành bạn đang dùng để bất kỳ đâu gõ lệnh
+<code>webdev</code> đều được.</p>
+<p>Giờ để biến thư mục <code>web</code> của dự án thành webserver, và mỗi khi mã thay đổi công
+cụ Dart sẽ biên dịch dart thành JS, từ <code>terminate</code> ở thư mục dự án gõ</p>
+<pre class="bg-dark text-light p-2">
+webdev serve --release web:8080
+</pre>
+<p>Trong đó web là thư mục code, <code>8080</code> cổng webserver, bạn thích cổng khác cũng được.
+<code>--release</code> để biên dịch sang JS.</p>
+<p>Sau khi gõ lệnh đó xong, thì mọi thay đổi các file dart trong web sẽ tự động biên dịch,
+kết quả lưu ở <code>.dart_tool/build/generated/web</code></p>
+<p>Đồng thời lúc này từ trình duyệt sẽ kiểm tra được ứng dụng bằng địa chỉ <code>http://localhost:8080/</code></p>
+    <h2 class="text-primary display-4 font30">Những dòng code đầu tiên</h2>
+<p class="alert alert-danger">Lập trình ứng dụng Web thì bạn phải biết về
+    <a href="/khai-quat-ve-html.html" target="_blank">HTML</a>,
+    <a href="/css-la-gi-cach-nhung-ma-css-vao-html.html" target="_blank">CSS</a>,
+    <a href="/javascript/" target="_blank">JavaScript</a>
+    trước!</p>
+<p>Mở file <code>web/index</code> và cập nhật nội dụng HTML như sau:</p>
+<pre class="prettyprint lang-html">
+<?=
+$this->escapeHtml(<<<'HTML'
+<!DOCTYPE html>
 
-</p>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Ứng dụng đầu tiên</title>
+    <script defer src="main.dart.js"></script>
+  </head>
+  <body>
+    <p id="idxinchao"></p>
+  </body>
+</html>
+HTML
+);
+?>
+</pre>
+<p>Lưu lại, rồi kiểm tra lại ở http://localhost:8080/, tiêu đề trang cho biết đã load index.html thành công.</p>
+    <img src="webapp.png" alt="webapp">
+<p>Vì trong thư mục <code>web</code> có file <code>main.dart</code>, mỗi khi biên dịch nó chuyển
+thành <code>main.dart.js</code> nên trong HTML cần load file này, đây chính là ứng dụng của chúng ta.</p>
+
+<p>Giờ mở file <code>main.dart</code> ra, hãy thêm những dòng code sau:</p>
+<pre class="prettyprint lang-js">
+//Nạp thư viện để tương tác với HTML
+import 'dart:html';
+
+void main() {
+  //Lấy phần tử có id = idxinchao
+  var xinchao =  querySelector('#idxinchao');
+
+  //Khi load trang thiết lập dòng chữ
+  xinchao.text = 'Xin chào ! Đây là ứng dụng Web Dart đầu tiên';
+
+  //Bấm vào dòn chữ thì viết ra log
+  xinchao.addEventListener('click', (e) => print('Bấm vào dòng chữ'));
+
+}
+</pre>
+<p>Lưu lại, VS sẽ biên dịch lại <code>main.dart.js</code>, giờ load lại trang sẽ thấy</p>
+    <img src="webwabdart.png" alt="webapp">
+<p>Khi bạn bấm vào dòng cữ, thì ở logcat cũng sẽ thấy dòng chữ <code>bấm vào dòng chữ</code></p>
+
+<p>Như vậy bạn đã thực hiện viết được ứng dụng Web đầu tiên bằng Dart, đã biên dịch thành JS để có thể
+chạy trên bất kỳ trình duyệt nào. Dù đơn giản, nhưng từ ví dụ này sẽ là cơ sở cho những tìm hiểu phức tạp hơn.</p>
+
 
 <?
 echo\XT\Core\Common\Common::createBottomIndex($index_article);
