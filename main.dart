@@ -1,30 +1,28 @@
-class MyClass<E,T>
-{
-  E thuoctinh1;
-  T thuoctinh2;
-
-  setThuoctinh(E t1, T t2) {
-    this.thuoctinh1 = t1;
-    this.thuoctinh2 = t2;
-  }
-
-  show() {
-    print(this.thuoctinh1);
-    print(this.thuoctinh2);
-  }
-  
+myfunction(String s) {
+    if (s == 'A')
+      throw new Exception('Dữ liệu sai');
+    if (s == 'B')
+      throw new FormatException('Sai dịnh dạng');
 }
-
-fncGeneric<T>(T thamso) {
-  print(thamso);
-}
-
 
 main() {
-  var a = new MyClass<int, String>();
-  a.setThuoctinh(11, 'Lop Generic');
-  a.show(); 
-  fncGeneric<int>(111);
+    try {
+       //Các code trong try nếu
+       //phát sinh ngoại lệ sẽ được bắt lại
+       myfunction('A');
+    }
+    on FormatException catch(e) {
+        //Khối này bắt nếu lỗi là FormatException
+        print('Lỗi xảy ra' + e.message);
+    }
+    catch (e) {
+        //Khối này bắt lỗi bất kỳ
+        print('Lỗi xảy ra' + e.message);
+    }
+    finally  {
+        //Khối này chạy nếu có catch xảy ra
+    }
 
-}
+
+ }
 

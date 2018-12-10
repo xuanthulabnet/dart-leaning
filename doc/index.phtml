@@ -10,8 +10,9 @@ $nav = $index_article->renderlist();
 \XT\Core\Common\Common::eventValue(\XT\Core\System\KeyView::startNav(),$nav);
 
 $index_article = [
-    ['generic' , '<strong>Hàm và lớp Generic</strong>'],
-    ['genericlib' , '<strong>Thư viện Generic Dart</strong>'],
+    ['Exceptions' , '<strong>Exception trong Dart</strong>'],
+    ['Throw' , '<strong>Throw Exception</strong>'],
+    ['Catch' , '<strong>Catch Exception</strong>'],
 
 
 
@@ -21,84 +22,86 @@ $index_article = [
 ?>
 
     <a id="<?=$index_article[0][0]?>" name="<?=$index_article[0][0]?>"></a>
-    <h2 class="text-danger display-4 font30">Hàm và lớp Generic</h2>
-    <p>Bạn có thể xây dựng các lớp, các hàm mà khi khai báo thì nó không làm việc trên một kiểu
-        dữ liệu cụ thể nào cả, mà kiểu dữ liệu nó làm việc là chung chung, ký hiệu là kiểu dữ liệu <code>A</code>,
-        kiểu dữ liệu <code>B</code>, kiểu dữ liệu <code>E</code>, <code>T</code> ...</p>
-    <p>Chỉ đến khi triển khai lớp thành đối tượng mới chỉ định <code>A</code> là kiểu cụ thể gì, <code>B</code>
-        là kiểu gì ... Các hàm, lớp xây dựng theo cách đó gọi là là hàm, lớp Generic</p>
-<p>Để khai báo lớp làm việc trên kiểu dữ liệu chung gì thì khai báo ký hiệu đại diện kiểu dữ liệu trong
-    <code>&lt;...&gt;</code> sau tên lớp, ví dụ lớp <code>MyClass</code> sẽ làm việc trên kiểu E và T</p>
+    <h2 class="text-danger display-4 font30">Exception trong Dart</h2>
+<p>Dart giống như các ngôn ngữ khác, nó có thể phát sinh các ngoại lệ Exception(thông báo phát sinh lỗi),
+nếu ngoại lệ đó không được bạn bắt lại thi chương trình sẽ kết thúc với lỗi.</p>
+<p>Dart cung cấp sẵn lớp <code>Exception</code> và lớp <code>Error</code> để bạn sử dụng, hoặc xây dựng
+các ngoại lệ. Tạo một ngoại lệ bằng câu lệnh <code>new Exception('Thông báo lỗi');</code></p>
+<p>Dart cũng triển khai từ <code>Exception</code>, <code>Error</code> ra nhiều ngoại lệ để sử dụng
+cho từng loại lỗi không hợp lệ khác nhau như:</p>
+<table class="table table-sm">
+    <tr>
+        <th>Ngoại lệ</th>
+        <th>Sử dụng</th>
+    </tr>
+
+    <tr>
+        <td style="white-space: nowrap"><code>TimeoutException</code></td>
+        <td>Lỗi khi đặt đến giới hạn thời gian chờ async</td>
+    </tr>
+    <tr>
+        <td style="white-space: nowrap"><code>FormatException</code></td>
+        <td>Lỗi khi dữ liệu không đúng định dạng</td>
+    </tr>
+    <tr>
+        <td><code>IOException</code></td>
+        <td>Lỗi IO (vào/ra), từ nó triển khai các ngoại lệ FileSystemException HttpException ProcessException SignalException SocketException StdinException StdoutException TlsException WebSocketException</td>
+    </tr>
+</table>
+<p>Như vậy tạo một đối tượng Exception dùng cú pháp</p>
 <pre class="prettyprint lang-js">
-class MyClassX&lt;E, T&gt; {
-
-}
+var e = new Exception('Thông báo lỗi');
 </pre>
-<p>Tương tự như hàm, hàm sau nhận tham số kiểu <code>T</code></p>
-<pre class="prettyprint lang-js">
-fncGeneric&lt;T&gt;(T thamso) {
-  print(thamso);
-}
-</pre>
-<p><code>T</code>, <code>E</code> cụ thể là kiểu gì thì chỉ định khi tạo đối tượng từ lớp Generic</p>
-<pre class="prettyprint lang-js">
-var a = new MyClass&lt;int, String&gt;();
 
-//Ký hiệu E sẽ là kiểu int
-//Kỹ hiệu T sẽ là kiểu String
-
-
-var b = new MyClass&lt;double, int&gt;();
-//Ký hiệu E sẽ là kiểu double
-//Kỹ hiệu T sẽ là kiểu int
-</pre>
-<p>Ví dụ</p>
-<pre class="prettyprint lang-js">
-class MyClass&lt;E,T&gt;
-{
-  E thuoctinh1;
-  T thuoctinh2;
-
-  setThuoctinh(E t1, T t2) {
-    this.thuoctinh1 = t1;
-    this.thuoctinh2 = t2;
-  }
-
-  show() {
-    print(this.thuoctinh1);
-    print(this.thuoctinh2);
-  }
-
-}
-
-fncGeneric&lt;T&gt;(T thamso) {
-  print(thamso);
-}
-
-
-main() {
-  var a = new MyClass&lt;int, String&gt;();
-  a.setThuoctinh(11, 'Lop Generic');
-  a.show();
-  fncGeneric&lt;int&gt;(111);
-
-}
-</pre>
     <a id="<?=$index_article[1][0]?>" name="<?=$index_article[1][0]?>"></a>
-    <h2 class="text-danger display-4 font30">Thư viện Generic</h2>
-<p>Trong Dart có nhiều cấu trúc dữ liệu xây dựng sẵn bằng kỹ thuật Generic
-    (xem <a href="/tim-hieu-cac-cau-truc-du-lieu-trong-dart.html" target="_blank">Cấu trúc dữ liệu Dart</a>),
-</p>
-<p>Bạn có thể sử dụng để khởi tạo đó là: <br>
-    <code>DoubleLinkedQueue&lt;E&gt;</code><br>
-    <code>HashMap&lt;K,V&gt;</code><br>
-    <code>HashSet&lt;E&gt;</code><br>
-    <code>LinkedHashMap&lt;K,V&gt;</code><br>
-    <code>LinkedHashSet&lt;E&gt;</code><br>
-    <code>LinkedList&lt;E extends LinkedListEntry&lt;E&gt;&gt;</code><br>
-    <code>Queue&lt;E&gt;</code>
+    <h2 class="text-danger display-4 font30">Throw - Phát sinh lỗi</h2>
+<p>Để phát sinh lỗi bạn dùng từ khóa <code>throw</code> theo sau là <code>Exception</code> muốn phát đi</p>
+<p>Ví dụ khi gọi hàm sau mà truyền tham số là 'A' hoặc 'B' thì sẽ phát sinh lỗi</p>
+<pre class="prettyprint lang-js">
+myfunction(String s) {
+    if (s == 'A')
+      throw new Exception('Dữ liệu sai');
+    if (s == 'B')
+      throw new FormatException('Sai dịnh dạng');
+}
 
-</p>
+myfunction('A');
+
+//KẾT QUẢ CHẠY
+Unhandled exception:
+Exception: Dữ liệu sai
+#0 myfunction (file:///D:/dart-learning/main.dart:3:7)
+#1 main (file:///D:/dart-learning/main.dart:7:4)
+#2 _startIsolate.&lt;anonymous closure&gt; (dart:isolate/runtime/libisolate_patch.dart:289:19)
+#3 _RawReceivePortImpl._handleMessage (dart:isolate/runtime/libisolate_patch.dart:171:12)
+Exited (255)
+</pre>
+    <a id="<?=$index_article[2][0]?>" name="<?=$index_article[2][0]?>"></a>
+    <h2 class="text-danger display-4 font30">Bắt ngoại lệ với try - catch</h2>
+<p>Như đã biết, nếu ngoại lệ phát sinh mà không bắt lại thì sẽ dừng chương trình,
+nếu muốn bắt ngoại lệ dùng lệnh <code>try</code> với cú pháp như sau</p>
+<pre class="prettyprint lang-js">
+try {
+   //Các code trong try nếu
+   //phát sinh ngoại lệ sẽ được bắt lại
+   myfunction('A');
+}
+on FormatException catch(e) {
+    //Khối này bắt nếu lỗi là FormatException
+    print('Lỗi xảy ra' + e.message);
+}
+catch (e) {
+    //Khối này bắt lỗi bất kỳ
+    print('Lỗi xảy ra' + e.message);
+}
+finally  {
+    //Khối này chạy nếu có catch xảy ra
+}
+</pre>
+<p>Khối <code>finally</code> chạy sau khi bắt lỗi - nếu không cần thì bỏ đi</p>
+<p><code>on ... catch</code> để bắt một loại lỗi có kiểu cụ thể nào đó, bạn có thể khai báo nhiều kiểu
+để ứng vào kiểu lỗi nào thì chạy khối lệnh tương ứng ở điểm catch đó.</p>
+<p>Như vậy, khi lỗi được bắt lại, chương trình vẫn chạy tiếp theo yêu cầu xử lý của code chứ không dừng đột ngột</p>
 
 <?
 echo\XT\Core\Common\Common::createBottomIndex($index_article);
