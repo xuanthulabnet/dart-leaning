@@ -3,132 +3,415 @@
  * @var $this PhpRenderer
  */
 $index_article =\XT\Core\Common\Common::sendevent('dynamic_load_phtml',
-    ['file'=>'module/Application/view/dynamiccontent/dart.php', 'view'=>$this])->last();
+    ['file'=>'module/Application/view/dynamiccontent/git.php', 'view'=>$this])->last();
 
 $nav = $index_article->renderlist();
 
 \XT\Core\Common\Common::eventValue(\XT\Core\System\KeyView::startNav(),$nav);
 
+
+
+
+
 $index_article = [
-    ['WebApp' , '<strong>Dự án mới</strong>'],
-    ['webdev', '<i>Cài đặt webdev</i>']
-
-
+    ['darthtml' , '<strong>dart:html</strong>'],
+    ['Element' , '<i>Phần tử HTML trong Dart</i>'],
+    ['querySelector' , '<i>Tìm phần tử trong DOM</i>'],
+    ['EventListener' , '<strong>EventListener - bắt sự kiện phần tử DOM</strong>'],
 
 
 ];
 
 ?>
-
-<p>Ứng dụng của <code>Dart</code> bao gồm tạo ra các ứng dụng phía Server,
-    các ứng dựng chạy trên nền Web phía Client, các ứng dụng di động
-với Flutter.</p>
-<p>Đối với ứng dụng Web (từ đây hiểu là ứng dụng chạy trên Browser), thực chất là code viết
-    bằng Dart sẽ được chuyển thành JavaScript và thi hành code JS đó (Mặc dù trình duyệt
-    Chrome của Google có thể chạy trực tiếp Dart, nhưng tốt nhất không đi theo hướng này
-    mà chúng ta sẽ luôn biên dịch Dart thành JS).</p>
-<p>Khi tạo ứng dụng Web nếu muốn phát triển dựa trên framework <code>Angular</code> thì sẽ tích hợp thư viện
-    AngularDart, phần này sẽ nói khi đã nắm được cơ bản về Dart Web</p>
-
-    <a id="<?=$index_article[0][0]?>" name="<?=$index_article[0][0]?>"></a>
-    <h2 class="text-danger display-4 font30">Dự án mới, môi trường phát triển ứng dụng Web bằng Dart</h2>
-<p>Bạn vẫn có thể dùng Visual Studio Code với các thiết lập như đã nói ở
-    <a href="/cai-dat-sdk-dart-viet-chuong-trinh-dart-dau-tien.html" target="_blank">Cài đặt SDK Dart</a>,
-để phát triển ứng dụng Web</p>
-<p>Từ VS Code, tạo một dự án (thư mục) mới tên là <code>FirstWebApp</code>,
-tạo thư mục <code>web</code> làm nơi lưu file dart, html của ứng dụng và cũng chính là thư
-mục lưu các thành phần tĩnh khác (hình ảnh, css ...). Trước tiên, trong thư mục này hãy tạo 2 file
-<code>main.dart</code> và <code>index.html</code></p>
-<p>Ở thư mục gốc của dự án tạo file <code>pubspec.yaml</code> có nội dung như sau:</p>
-<pre class="prettyprint lang-js0">
-name: FirstWebApp
-description: Đây là ứng dụng biên dịch từ Dart
-
-dependencies:
-  build_runner: ^1.0.0
-  build_test: ^0.10.2
-  build_web_compilers: ^0.4.0
-</pre>
-<p>Sau đó từ dòng lệnh <code>terminate</code> (đang ở thư mục dự án) gõ lệnh <code>pub get</code>
-để tải và cài đặt các gói trên vào thư viện Dart.</p>
-    <a id="<?=$index_article[1][0]?>" name="<?=$index_article[1][0]?>"></a>
-    <h2 class="text-primary display-4 font30">Cài đặt webdev</h2>
-<p><code>webdev</code> là một gói của Dart (quản lý bởi pub), công cụ này cùng với các công cụ
-đã có khi cài SDK như dart2js ... giúp chúng ta các việc: tạo ra một webdev server (từ thư mục web ở trên),
-giám sát sự thay đổi các file trong thư mục web, mỗi khi thay đổi tự động dịch ra code.</p>
-<p>Gõ lệnh sau để cài webdev</p>
-<pre class="bg-dark text-light p-2">
-pub global activate webdev
-</pre>
-<p>Chú ý sau khi hoàn tất có thông báo nơi chứa file webdev, có thể bạn phải thêm thư mục
-dẫn đến file này vào biến môi trường <code>PATH</code> của hệ điều hành bạn đang dùng để bất kỳ đâu gõ lệnh
-<code>webdev</code> đều được.</p>
-<p>Giờ để biến thư mục <code>web</code> của dự án thành webserver, và mỗi khi mã thay đổi công
-cụ Dart sẽ biên dịch dart thành JS, từ <code>terminate</code> ở thư mục dự án gõ</p>
-<pre class="bg-dark text-light p-2">
-webdev serve --release web:8080
-</pre>
-<p>Trong đó web là thư mục code, <code>8080</code> cổng webserver, bạn thích cổng khác cũng được.
-<code>--release</code> để biên dịch sang JS.</p>
-<p>Sau khi gõ lệnh đó xong, thì mọi thay đổi các file dart trong web sẽ tự động biên dịch,
-kết quả lưu ở <code>.dart_tool/build/generated/web</code></p>
-<p>Đồng thời lúc này từ trình duyệt sẽ kiểm tra được ứng dụng bằng địa chỉ <code>http://localhost:8080/</code></p>
-    <h2 class="text-primary display-4 font30">Những dòng code đầu tiên</h2>
-<p class="alert alert-danger">Lập trình ứng dụng Web thì bạn phải biết về
-    <a href="/khai-quat-ve-html.html" target="_blank">HTML</a>,
-    <a href="/css-la-gi-cach-nhung-ma-css-vao-html.html" target="_blank">CSS</a>,
-    <a href="/javascript/" target="_blank">JavaScript</a>
-    trước!</p>
-<p>Mở file <code>web/index</code> và cập nhật nội dụng HTML như sau:</p>
+<a id="<?=$index_article[0][0]?>" name="<?=$index_article[0][0]?>"></a>
+<h2 class="text-danger display-4 font30">Thư viện <code>dart:html</code> - tương tác với HTML DOM</h2>
+<p>Thư viện để Dart làm việc với DOM HTML là <code>dart:html</code>, nên trước khi sử dụng cần nạp thư viện này
+ở đầu file:</p>
+<pre class="prettyprint lang-js">import 'dart:html';</pre>
+<p>Cũng cần tìm hiểu về HTML DOM trước <a target="_blank" href="/khai-niem-co-ban-dom-javascript.html">Cơ bản về DOM</a></p>
+<p>Khi thư viện này được nạp, chúng ta lập tức có biến (thuộc tính) với tên:</p>
+<ul>
+    <li><code>document</code> biến có kiểu <code>HtmlDocument</code> đó là nút gốc của DOM, từ biến này
+    có thể truy cập mọi thành phần DOM (nó giống document trong JavaScript)</li>
+    <li><code>window</code> biến kiểu <code>Window</code> biểu diễn cửa sổ trình duyệt (Gống window trong JS), từ đây
+    có thể truy cập các hàm JS thông dụng đã biết, ví dụ alert <code>window.alert('Hello!');</code></li>
+</ul>
+<p class="alert alert-danger">Tham khảo <a href="/web-dart-tim-hieu-ung-dung-dau-tien.html" target="_blank">Web Dart - Ứng dụng đầu tiên</a>,
+hãy tạo ra một dự án theo hướng dẫn đó, để thực hành các đoạn code ngắn ở đây. Tạm thời nội dung file <code>main.dart</code>, <code>main.css</code> <code>index.html</code>
+như sau:</p>
+<i>index.html</i>
 <pre class="prettyprint lang-html">
-<?=
-$this->escapeHtml(<<<'HTML'
+<?=$this->escapeHtml(<<<'HTML'
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Web Dart 02</title>
+    <link rel="stylesheet" href="main.css">
+    <script defer src="main.dart.js"></script>
+  </head>
+  <body>
+  </body>
+</html>
+HTML
+)
+?>
+</pre>
+<i>main.dart</i>
+<pre class="prettyprint lang-js">
+void main() {
+
+}
+</pre>
+<i>main.css</i>
+<pre class="prettyprint lang-html">
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.2em;
+    margin: 15px;
+  }
+</pre>
+<p>Chạy thử truy cập <code>http://localhost:8080</code> chỉ là trang trắng, vì chưa có gì trong HTML và chưa có code trong <code>main.dart</code></p>
+<a id="<?=$index_article[1][0]?>" name="<?=$index_article[1][0]?>"></a>
+<h2 class="text-primary display-4 font25">Lớp Element phần tử HTML</h2>
+<p>Lớp <code>Element</code> cùng với các kế thừa của nó dùng để biểu diễn các phần từ HTML trong DOM như các phần tử
+<code>&lt;a&gt;</code> <code>&lt;img&gt;</code> <code>&lt;article&gt;</code> <code>&lt;p&gt;</code> <code>&lt;div&gt;</code>
+    <code>...</code> </p>
+<p>Đối tượng <code>Element</code> có được bằng cách khởi tạo đối tượng mới hoặc bằng cách tìm nó trong DOM hiện hành.</p>
+<p>Gọi hàm khởi tạo <code>Element.tag(tagname)</code> để tạo ra phần tử HTML có tên là tagname (như a, p, img ...)
+    hoặc gọi hàm tạo theo tên phần tử HTML <code>Element.a();</code>
+    <code>Element.img();</code> <code>Element.table());</code> <code>...</code> ví dụ: </p>
+<pre class="prettyprint lang-js">
+var $srcimg = 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg';
+var img = Element.tag('img');                       //Tạo phần tử HTML Img
+img
+..setAttribute('src', $srcimg)
+..style.width='150px';
+document.body.children.add(img);                    //Nối vào cuối HTML
+
+var linka = Element.a();                            //Ví dụ tạo phần tử a
+linka
+..text = 'XuanThuLab'
+..setAttribute('target', '_blank')
+..setAttribute('href', 'https://xuanthulab.net');
+document.body.children.add(linka);                  //Nối vào cuối HTML
+</pre>
+<p>Kết quả chạy thử:</p>
+<img src="webdart01.png" alt="webdart">
+<p>Nếu muốn lấy phần tử đang có trong DOM dùng đến phương thức <code>querySelector</code> và <code>querySelectorAll</code>
+trình bày phần dưới</p>
+<p>Một số phương thức, thuộc tính trong Element</p>
+<table class="table table-sm">
+    <tr>
+        <td ><code>attributes</code></td>
+        <td>Map chứa các thuộc tính của phần tử HTML, mỗi phần tử HTML có nhiều thuộc tính - xem
+            <a href="/phan-tu-html-va-cac-thuoc-tinh.html#thuoctinh" target="_blank">Thuộc tính HTML</a> để biết chi tiết.</td>
+    </tr>
+    <tr>
+        <td><code>children</code></td>
+        <td>Thuộc tính biểu diễn danh sách (<a href="/tim-hieu-cac-cau-truc-du-lieu-trong-dart.html#list" target="_blank">List</a>)
+            các phần tử con của nó</td>
+    </tr>
+    <tr>
+        <td><code>parent</code></td>
+        <td>Thuộc tính trỏ đến phần tử cha</td>
+    </tr>
+    <tr>
+        <td><code>className</code></td>
+        <td>Chuỗi biểu diễn lớp CSS của phần tử</td>
+    </tr>
+    <tr>
+        <td><code>classes</code></td>
+        <td>Tập hợp (<a href="/tim-hieu-cac-cau-truc-du-lieu-trong-dart.html#set" target="_blank">Set</a>) các lớp CSS của phần tử</td>
+    </tr>
+    <tr>
+        <td><code>id</code></td>
+        <td>ID của phần tử</td>
+    </tr>
+    <tr>
+        <td><code>innerHtml</code></td>
+        <td>Văn bản HTML trong phần tử</td>
+    </tr>
+    <tr>
+        <td><code>title</code></td>
+        <td>Thuộc tính title của phần tử HTML</td>
+    </tr>
+    <tr>
+        <td><code>text</code></td>
+        <td>Thuộc tính chứa nội dung text của phần tử</td>
+
+    </tr>
+    <tr>
+        <td><code>dataset</code></td>
+        <td>Map cho phép truy cập các thuộc tính dạng tên dạng <code>data-*</code>, ví dụ <code>dataset['abc']</code>
+        truy cập đến thuộc tính HTML <code>data-abc</code></td>
+    </tr>
+    <tr>
+        <td><code>appendHtml(String html)</code></td>
+        <td>Phương thức để nối thêm văn bản HTML vào phần tử</td>
+    </tr>
+    <tr>
+        <td><code>appendText(String html)</code></td>
+        <td>Phương thức để nối thêm văn bản (không phải HTML) vào phần tử</td>
+    </tr>
+    <tr>
+        <td><code>getAttribute(String nameAttr)</code></td>
+        <td>Lấy thuộc tính của phần tử</td>
+    </tr>
+    <tr>
+        <td><code>querySelector(String selectors)</code></td>
+        <td>Tìm 1 phần tử con theo selector - xem phần dưới</td>
+    </tr>
+    <tr>
+        <td style="white-space: nowrap"><code>querySelectorAll(String selectors)</code></td>
+        <td>Tìm tất cả phần tử con theo selector - xem phần dưới</td>
+    </tr>
+    <tr>
+        <td><code>addEventListener</code></td>
+        <td>Thêm một Listener cho sự kiện - xem phần Thêm sự kiện</td>
+    </tr>
+    <tr>
+        <td><code>remove()</code></td>
+        <td>Loại bỏ phần tử ra khỏi DOM</td>
+    </tr>
+    <tr>
+        <td><code>onBlur()</code></td>
+        <td>Lấy luồng biêu diễn sự kiện <code>blur</code> (chuột trên phần tử)</td>
+    </tr>
+    <tr>
+        <td><code>onChange()</code></td>
+        <td>Lấy luồng biêu diễn sự kiện <code>change</code> (thay đổi giá trị phần tử)</td>
+    </tr>
+    <tr>
+        <td><code>onClick()</code></td>
+        <td>Lấy luồng biêu diễn sự kiện <code>click</code> (bấm vào phần tử)</td>
+    </tr>
+</table>
+<p>Xem đầy đủ tại <a href="https://api.dartlang.org/stable/2.1.0/dart-html/Element-class.html" target="_blank">Element Class</a></p>
+<a id="<?=$index_article[2][0]?>" name="<?=$index_article[2][0]?>"></a>
+<h2 class="text-primary display-4 font25">Lấy phần tử, tạo và chèn phần tử trong DOM</h2>
+<p>Có 2 phương thức để tìm ra phần tử trong DOm là <code>querySelectorAll(string selectors)</code>
+và phương thức <code>querySelector(String selectors)</code>, trong đó <code>selectors</code> là <code>CSS Selector</code>
+quen thuộc nhất là nếu đã từng sử dụng jQuery như <code>"a"</code>, như <code>".class"</code>, như <code>"#id"</code>
+<code>...</code>, hãy xem phần <a href="/selector-chon-phan-tu-trong-css.html" target="_blank">Selector CSS</a>,
+    <a href="/khai-niem-co-ban-dom-javascript.html#phantu" target="_blank">Chọn phần tử trong DOM với JS</a>,
+    <a href="/selector-chon-phan-tu-trong-jquery.html" target="_blank">Selector với jQuery</a> để biết
+về các biểu thức <code>selector</code></p>
+<ul>
+    <li><code>querySelector(String selectors)</code> trả về phần tử Element đầu tiên nó tìm thấy thỏa mãn <code>selector</code></li>
+    <li><code>querySelectorAll(string selectors)</code> trả về danh sách các Element (<code>List&lt;Element&gt;</code>)
+        thỏa mãn <code>selector</code>
+    </li>
+</ul>
+<p>Trở lại ví dụ trên, xóa bỏ đi code bên trong <code>main.dart</code> và biên tập <code>index.html</code>,
+<code>main.css</code> như sau:</p>
+
+<i>index.html</i>
+<pre class="prettyprint lang-html">
+<?=$this->escapeHtml(<<<'HTML'
 <!DOCTYPE html>
 
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Ứng dụng đầu tiên</title>
+    <title>Web Dart 02</title>
+    <link rel="stylesheet" href="main.css">
     <script defer src="main.dart.js"></script>
   </head>
   <body>
-    <p id="idxinchao"></p>
+    <p>Các bài học lập trình với <span id="langid">Dart</span></p>
+    <ul id="ulcacbaihoc">
+      <li>Nội dung 1</li>
+      <li>Nội dung 2</li>
+    </ul>
+
+    <p>Các bài đã học</p>
+    <ul id="cacbaidahoc">
+    </ul>
+    <button id="buttonreset">Reset</button>
   </body>
 </html>
 HTML
-);
+)
 ?>
 </pre>
-<p>Lưu lại, rồi kiểm tra lại ở http://localhost:8080/, tiêu đề trang cho biết đã load index.html thành công.</p>
-    <img src="webapp.png" alt="webapp">
-<p>Vì trong thư mục <code>web</code> có file <code>main.dart</code>, mỗi khi biên dịch nó chuyển
-thành <code>main.dart.js</code> nên trong HTML cần load file này, đây chính là ứng dụng của chúng ta.</p>
+<i>main.css</i>
+<pre class="prettyprint lang-html">
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.2em;
+    margin: 15px;
+  }
+  ul li {
+    border: 1px solid green;
+    padding: 10px;
+    margin: 10px;
+  }
 
-<p>Giờ mở file <code>main.dart</code> ra, hãy thêm những dòng code sau:</p>
+.elementli {
+  font-weight: bold;
+  color: red;
+}
+</pre>
+<p>Đây là code HTML, CSS thông thường chạy thử <code>http://localhost:8080</code> được</p>
+<img src="webdart02.png" alt="web dart 02">
+<p>Giờ muốn thực hiện các tác vụ như sau khi mở trang (code trong <code>main.dart</code>):</p>
+<p>Thay nội dung <code>Dart</code> trong phần tử <code>span</code> có <code>id</code> là <code>langid</code>
+thành <code>WEB DART</code></p>
 <pre class="prettyprint lang-js">
-//Nạp thư viện để tương tác với HTML
+var lang = querySelector('#langid');   //Tìm phần tử theo ID
+lang.text = 'WEB DART';
+</pre>
+<p>Lấy tất cả các <code>li</code> trong <code>ul</code> có <code>id="ulcacbaihoc"</code>,
+mỗi phần tử <code>li</code> tìm được thiết lập cho nó lớp CSS <code>elementli</code> (chữ màu đỏ),
+đồng thời thay nôi dung tương ứng là <code>Bài học 1</code>, <code>Bài học 2</code> ...</p>
+<pre class="prettyprint lang-js">
+var baihoc = 0;
+var lis = querySelectorAll('#ulcacbaihoc li');  //Lấy tất cả li trong UL
+lis.forEach((Element li) {
+    baihoc ++;
+    li.text = 'Bài học ' + baihoc.toString();   //Thiết lập nội dung li
+    li.classes.add('elementli');                //Thêm CSS class vào LI
+});
+</pre>
+<p>Chạy thử đến lúc này được</p>
+<img src="webdart03.png" alt="web dart 03">
+<p>Tiếp tục, tạo ra 3 phần tử <code>li</code> và chèn vào <code>ul</code>, các <code>li</code>
+có nội dung là <code>Bài học 3</code> ... <code>Bà học 5</code></p>
+<p>Thêm vào <code>main.dart</code> đoạn code</p>
+<pre class="prettyprint lang-js">
+var ul = querySelector('#ulcacbaihoc');
+for (int j=1; j <=3; j++) {
+  var li = Element.li();                        //Khởi tạo phần tử li
+  li.text = 'Bài học ' + (++baihoc).toString(); //Thiết lập nội dung li
+  ul.children.add(li);                          //Thêm vào UL
+}
+</pre>
+<p>Đến lúc này <code>main.dart</code> có nội dung tổng hợp lại là</p>
+<pre class="prettyprint lang-js">
 import 'dart:html';
+void main()  {
+    var lang = querySelector('#langid');
+    lang.text = 'WEB DART';
 
-void main() {
-  //Lấy phần tử có id = idxinchao
-  var xinchao =  querySelector('#idxinchao');
+    var baihoc = 0;
+    var lis = querySelectorAll('#ulcacbaihoc li');
+    lis.forEach((Element li) {
+        baihoc ++;
+        li.text = 'Bài học ' + baihoc.toString();
+        li.classes.add('elementli');
+    });
 
-  //Khi load trang thiết lập dòng chữ
-  xinchao.text = 'Xin chào ! Đây là ứng dụng Web Dart đầu tiên';
 
-  //Bấm vào dòn chữ thì viết ra log
-  xinchao.addEventListener('click', (e) => print('Bấm vào dòng chữ'));
+    var ul = querySelector('#ulcacbaihoc');
+    for (int j=1; j <=3; j++) {
+      var li = Element.li();
+      li.text = 'Bài học ' + (++baihoc).toString();
+      ul.children.add(li);
+    }
+}
+</pre>
+<p>Kết quả kiểm tra <code>http://localhost:8080</code></p>
+<img src="webdart04.png" alt="web dart 04">
+
+<a id="<?=$index_article[3][0]?>" name="<?=$index_article[3][0]?>"></a>
+<h2 class="text-danger display-4 font30">EventListener - Lắng nghe sự kiện cho phần tử</h2>
+<p>Các sự kiện phát đi từ phần tử (như bấm vào phần tử, thay đổi giá trị phần tử ...) được biểu diễn bằng đối tượng lớp
+<code>Event</code>, đối tượng này được làm tham số cho hàm thi hành mà sự kiện xảy ra - hàm đó gọi là <code>Listener</code></p>
+<p>Một <code>Listener</code> là một hàm, khai báo dạng:</p>
+<pre class="prettyprint lang-js">
+void ListenerFunction(Event e) {
 
 }
 </pre>
-<p>Lưu lại, VS sẽ biên dịch lại <code>main.dart.js</code>, giờ load lại trang sẽ thấy</p>
-    <img src="webwabdart.png" alt="webapp">
-<p>Khi bạn bấm vào dòng cữ, thì ở logcat cũng sẽ thấy dòng chữ <code>bấm vào dòng chữ</code></p>
+<p>Khi có các <code>Listener</code>, đăng ký nó lắng nghe các sự kiện trên phần tử bằng các sử dụng các thuộc tính biểu
+    diễn luồng sự kiện trên phần tử như:
+    <code>Element.onClick</code>,
+    <code>Element.onBlur</code>,
+    <code>Element.onChange</code>,
+    <code>Element.onKeyDown</code>,
+    <code>Element.onKeyPress</code>,
+    <code>Element.onSubmit</code>,
+    <code>Element.onReset</code>,
+    <code>Element.onSubmit</code>,
+    <code>Element.onDoubleClick</code>,
+    <code>Element.onFocus</code> ... Từ thuộc tính này đăng ký listener theo dạng như sau:</p>
+<pre class="prettyprint lang-js">
+//Đăng ký listener cho sự kiện bấm vào phần tử element
+element.onClick.listen(listener);
+</pre>
+<p>Một số thuộc tính, phương thức trong
+    <a href="https://api.dartlang.org/stable/2.1.0/dart-html/Event-class.html" target="_blank">Event</a></p>
+<table class="table table-sm">
+    <tr>
+        <td><code>target</code></td>
+        <td>Đối tượng phát sự kiện</td>
+    </tr>
+    <tr>
+        <td><code>type</code></td>
+        <td>Chuỗi biểu diễn kiểu sự kiện</td>
+    </tr>
+    <tr>
+        <td><code>preventDefault()</code></td>
+        <td>Dừng thi hành hành động mặc định của sự kiện - Xem thêm <a href="/su-kien-trong-dom-javascript.html#listener" target="_blank">preventDefault</a></td>
+    </tr>
+    <tr>
+        <td><code>stopPropagation()</code></td>
+        <td>Dừng lan truyền sự kiện - Xem thêm <a href="/su-kien-trong-dom-javascript.html#listener" target="_blank">stopPropagation</a></td>
+    </tr>
+</table>
+<p>Trở lại ví dụ trên, thực hiện chức năng khi bấm vào phần tử <code>li</code>, sẽ di chuyển nó từ <code>ul</code>
+có <code>id=ulcacbaihoc</code> đến <code>ul</code> có <code>id=cacbaidahoc</code> và ngược lại, tùy thuộc phần tử đó
+đang nằm ở <code>ul</code> nào</p>
+<pre class="prettyprint lang-js">
+void main()  {
+    var lang = querySelector('#langid');
+    lang.text = 'WEB DART';
 
-<p>Như vậy bạn đã thực hiện viết được ứng dụng Web đầu tiên bằng Dart, đã biên dịch thành JS để có thể
-chạy trên bất kỳ trình duyệt nào. Dù đơn giản, nhưng từ ví dụ này sẽ là cơ sở cho những tìm hiểu phức tạp hơn.</p>
+    var baihoc = 0;
+    var lis = querySelectorAll('#ulcacbaihoc li');
+    lis.forEach((Element li) {
+        baihoc ++;
+        li.text = 'Bài học ' + baihoc.toString();
+        li.classes.add('elementli');
+    });
 
+
+    var ul = querySelector('#ulcacbaihoc');
+    for (int j=1; j <=3; j++) {
+      var li = Element.li();
+      li.text = 'Bài học ' + (++baihoc).toString();
+      ul.children.add(li);
+    }
+
+    //Lấy tất cả li
+    lis = querySelectorAll('#ulcacbaihoc li');
+    lis.forEach((Element li) {
+      //Thiết lập Listener khi bấm vào li
+      li.onClick.listen(moveLiElement);
+    });
+
+}
+
+//Listener lắng nghe bấm vào li
+void moveLiElement(Event e) {
+  LIElement li = e.target;
+  if (li.parent.id == 'ulcacbaihoc') {
+      querySelector('#cacbaidahoc').children.add(li);
+  }
+  else {
+      querySelector('#ulcacbaihoc').children.add(li);
+  }
+}
+</pre>
+
+<img src="" alt="">
 
 <?
 echo\XT\Core\Common\Common::createBottomIndex($index_article);
 ?>
+

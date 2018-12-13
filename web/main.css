@@ -1,0 +1,17 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.2em;
+    margin: 15px;
+  }
+  ul li {
+    border: 1px solid green;
+    padding: 10px;
+    margin: 10px;
+  }
+
+.elementli {
+  font-weight: bold;
+  color: red;
+}

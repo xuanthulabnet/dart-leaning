@@ -1,13 +1,41 @@
 import 'dart:html';
+ 
+void main()  { 
 
-void main() {
-  //Lấy phần tử có id = idxinchao
-  var xinchao =  querySelector('#idxinchao');
+    var lang = querySelector('#langid');
+    lang.text = 'WEB DART';
 
-  //Khi load trang thiết lập dòng chữ
-  xinchao.text = 'Xin chào ! Đây là ứng dụng Web Dart đầu tiên';
-  
-  //Bấm vào dòn chữ thì viết ra log
-  xinchao.addEventListener('click', (e) => print('Bấm vào dòng chữ'));
+    var baihoc = 0;
+    var lis = querySelectorAll('#ulcacbaihoc li');
+    lis.forEach((Element li) {
+        baihoc ++;
+        li.text = 'Bài học ' + baihoc.toString();
+        li.classes.add('elementli');
+    });
+
+
+    var ul = querySelector('#ulcacbaihoc');
+    for (int j=1; j <=3; j++) {
+      var li = Element.li();
+      li.text = 'Bài học ' + (++baihoc).toString();
+      ul.children.add(li);
+    } 
+
+    lis = querySelectorAll('#ulcacbaihoc li');
+    lis.forEach((Element li) {
+      li.onClick.listen(moveLiElement);
+    });
 
 }
+
+void moveLiElement(Event e) {
+  LIElement li = e.target;
+  if (li.parent.id == 'ulcacbaihoc') {
+      querySelector('#cacbaidahoc').children.add(li);
+  }
+  else {
+      querySelector('#ulcacbaihoc').children.add(li);
+  }
+}
+
+ 
